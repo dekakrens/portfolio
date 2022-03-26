@@ -62,7 +62,7 @@ const Portfolio = () => {
         {data.map((item) => (
           <article className="portfolio__item" key={item.id}>
             <div className="portfolio__item-image">
-              <img src={item.image} alt="" />
+              <img src={item.image} alt={item.title} />
             </div>
             <h3>{item.title}</h3>
             <div className="portfolio__item-cta">
