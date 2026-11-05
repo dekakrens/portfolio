@@ -9,11 +9,11 @@ export function Navbar({ availabilityBadge }: { availabilityBadge?: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navLinks = [
-    { label: 'Projects', href: '#projects' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Experience', href: '#experience' },
-    { label: 'Testimonials', href: '#testimonials' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Projects', href: '/#projects' },
+    { label: 'Skills', href: '/#skills' },
+    { label: 'Experience', href: '/#experience' },
+    { label: 'Wiki', href: '/wiki' },
+    { label: 'Contact', href: '/#contact' },
   ];
 
   return (

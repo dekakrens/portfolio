@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module.js';
 import { PortfolioModule } from './portfolio/portfolio.module.js';
+import { WikiModule } from './wiki/wiki.module.js';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 
@@ -13,6 +14,7 @@ import { AppService } from './app.service.js';
     }),
     DatabaseModule,
     PortfolioModule,
+    WikiModule,
   ],
   controllers: [AppController],
   providers: [AppService],

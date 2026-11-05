@@ -190,3 +190,19 @@ export const wikiArticles = pgTable('wiki_articles', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+export const wikiCategoriesRelations = relations(wikiCategories, ({ many, one }) => ({
+  articles: many(wikiArticles),
+  parent: one(wikiCategories, {
+    fields: [wikiCategories.parentId],
+    references: [wikiCategories.id],
+    relationName: 'categoryHierarchy',
+  }),
+}));
+
+export const wikiArticlesRelations = relations(wikiArticles, ({ one }) => ({
+  category: one(wikiCategories, {
+    fields: [wikiArticles.categoryId],
+    references: [wikiCategories.id],
+  }),
+}));
