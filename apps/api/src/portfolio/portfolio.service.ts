@@ -3,12 +3,16 @@ import { eq, desc, asc } from 'drizzle-orm';
 import { DRIZZLE_DB, type AppDatabase } from '../database/database.module.js';
 import * as schema from '../database/schema.js';
 import { CreateContactInquiryDto } from './dto/contact.dto.js';
+import { MailService } from '../mail/mail.service.js';
 
 @Injectable()
 export class PortfolioService {
   private readonly logger = new Logger(PortfolioService.name);
 
-  constructor(@Inject(DRIZZLE_DB) private readonly db: AppDatabase) {}
+  constructor(
+    @Inject(DRIZZLE_DB) private readonly db: AppDatabase,
+    private readonly mailService: MailService,
+  ) {}
 
   async getProfile() {
     try {
@@ -295,9 +299,34 @@ export class PortfolioService {
         .returning();
 
       this.logger.log(`New contact inquiry saved from ${dto.name} (${dto.email})`);
+
+      // Asynchronously dispatch email notification via Resend
+      this.mailService
+        .sendContactInquiryNotification({
+          name: dto.name,
+          email: dto.email,
+          subject: dto.subject,
+          message: dto.message,
+          inquiryId: record.id,
+        })
+        .catch((err) => {
+          this.logger.error(`Background email dispatch failed: ${err.message}`);
+        });
+
       return { success: true, inquiryId: record.id, message: 'Inquiry received successfully!' };
     } catch (err: any) {
       this.logger.warn(`Could not save contact inquiry to DB: ${err.message}. Returning mock success.`);
+
+      // Still attempt to send notification email even if DB write was interrupted
+      this.mailService
+        .sendContactInquiryNotification({
+          name: dto.name,
+          email: dto.email,
+          subject: dto.subject,
+          message: dto.message,
+        })
+        .catch(() => {});
+
       return { success: true, inquiryId: 'mock-id', message: 'Inquiry received successfully!' };
     }
   }

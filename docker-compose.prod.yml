@@ -29,6 +29,9 @@ services:
       PORT: 4000
       DATABASE_URL: postgresql://postgres:postgres@portfolio_postgres:5432/portfolio_db
       FRONTEND_URL: https://dekakrens.com
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-Deny Kurniawan <onboarding@resend.dev>}
+      RESEND_TO_EMAIL: ${RESEND_TO_EMAIL:-dekakrens@gmail.com}
     depends_on:
       portfolio_postgres:
         condition: service_healthy
