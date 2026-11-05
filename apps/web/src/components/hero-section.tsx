@@ -1,0 +1,134 @@
+import React from 'react';
+import { Profile } from '@/types/portfolio';
+import { Mail, ArrowRight, Download, Cpu, Layers, Terminal, Sparkles } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, TwitterIcon } from './icons';
+
+export function HeroSection({ profile }: { profile: Profile }) {
+  return (
+    <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+      {/* Subtle background glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 blur-[100px] -z-10 rounded-full pointer-events-none" />
+
+      <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
+        {/* Availability Badge */}
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm font-medium mb-6">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>{profile.availabilityBadge}</span>
+        </div>
+
+        {/* Title & Headline */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-[1.1] mb-6">
+          Crafting Resilient{' '}
+          <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
+            Web &amp; IoT Systems
+          </span>
+        </h1>
+
+        {/* Elevator pitch */}
+        <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-2xl mx-auto mb-10">
+          {profile.bioShort}
+        </p>
+
+        {/* Primary CTA Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-3.5 mb-12">
+          <a
+            href="#projects"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:hover:bg-neutral-100 dark:text-neutral-900 font-semibold text-sm transition-all shadow-md hover:shadow-lg"
+          >
+            <span>View Featured Work</span>
+            <ArrowRight className="w-4 h-4" />
+          </a>
+
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-800 dark:text-neutral-200 font-semibold text-sm transition-all"
+          >
+            <span>Get in Touch</span>
+          </a>
+
+          {profile.resumeAssetUrl && (
+            <a
+              href={profile.resumeAssetUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white text-sm font-medium transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              <span>Resume</span>
+            </a>
+          )}
+        </div>
+
+        {/* Social Links */}
+        <div className="flex items-center justify-center gap-4 text-neutral-500 dark:text-neutral-400">
+          {profile.socialLinks.github && (
+            <a
+              href={profile.socialLinks.github}
+              target="_blank"
+              rel="noreferrer"
+              className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors"
+              aria-label="GitHub Profile"
+            >
+              <GithubIcon className="w-5 h-5" />
+            </a>
+          )}
+          {profile.socialLinks.linkedin && (
+            <a
+              href={profile.socialLinks.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors"
+              aria-label="LinkedIn Profile"
+            >
+              <LinkedinIcon className="w-5 h-5" />
+            </a>
+          )}
+          {profile.socialLinks.twitter && (
+            <a
+              href={profile.socialLinks.twitter}
+              target="_blank"
+              rel="noreferrer"
+              className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors"
+              aria-label="Twitter Profile"
+            >
+              <TwitterIcon className="w-5 h-5" />
+            </a>
+          )}
+          {profile.socialLinks.email && (
+            <a
+              href={`mailto:${profile.socialLinks.email}`}
+              className="p-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors"
+              aria-label="Direct Email"
+            >
+              <Mail className="w-5 h-5" />
+            </a>
+          )}
+        </div>
+
+        {/* Quick Highlights Grid */}
+        <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
+          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
+            <Layers className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mb-2" />
+            <div className="text-xl font-bold text-neutral-900 dark:text-white">6+ Years</div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400">Full-Stack Experience</div>
+          </div>
+          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
+            <Cpu className="w-5 h-5 text-indigo-600 dark:text-indigo-400 mb-2" />
+            <div className="text-xl font-bold text-neutral-900 dark:text-white">Edge &amp; IoT</div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400">ESP32 / OpenCV / LoRa</div>
+          </div>
+          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
+            <Terminal className="w-5 h-5 text-teal-600 dark:text-teal-400 mb-2" />
+            <div className="text-xl font-bold text-neutral-900 dark:text-white">Enterprise</div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400">NestJS &amp; Drizzle ORM</div>
+          </div>
+          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
+            <Sparkles className="w-5 h-5 text-amber-500 dark:text-amber-400 mb-2" />
+            <div className="text-xl font-bold text-neutral-900 dark:text-white">99.2%</div>
+            <div className="text-xs text-neutral-500 dark:text-neutral-400">Vision OCR Accuracy</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
