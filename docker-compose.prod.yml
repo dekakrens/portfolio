@@ -1,0 +1,61 @@
+services:
+  portfolio_postgres:
+    image: postgres:16-alpine
+    container_name: portfolio_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-portfolio_db}
+    volumes:
+      - portfolio_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d portfolio_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - portfolio_network
+
+  portfolio_api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: portfolio_api
+    restart: always
+    ports:
+      - "8231:4000"
+    environment:
+      PORT: 4000
+      DATABASE_URL: postgresql://postgres:postgres@portfolio_postgres:5432/portfolio_db
+      FRONTEND_URL: https://dekakrens.com
+    depends_on:
+      portfolio_postgres:
+        condition: service_healthy
+    networks:
+      - portfolio_network
+
+  portfolio_web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: portfolio_web
+    restart: always
+    ports:
+      - "8230:3000"
+      - "8232:3000"
+    environment:
+      PORT: 3000
+      INTERNAL_API_URL: http://portfolio_api:4000/api/v1
+      NEXT_PUBLIC_API_URL: https://api.dekakrens.com/api/v1
+    depends_on:
+      - portfolio_api
+    networks:
+      - portfolio_network
+
+volumes:
+  portfolio_pgdata:
+
+networks:
+  portfolio_network:
+    driver: bridge
