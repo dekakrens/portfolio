@@ -18,12 +18,12 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
 
   if (!project) {
     return {
-      title: 'Project Not Found | Deka Krens',
+      title: 'Project Not Found | Deny Kurniawan (@dekakrens)',
       description: 'The requested engineering case study could not be found.',
     };
   }
 
-  const title = `${project.title} - Engineering Case Study | Deka Krens`;
+  const title = `${project.title} - Engineering Case Study | Deny Kurniawan`;
   const description = project.summary;
   const canonicalUrl = `https://dekakrens.com/projects/${project.slug}`;
 
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       description,
       url: canonicalUrl,
       type: 'article',
-      siteName: 'Deka Krens Portfolio',
+      siteName: 'Deny Kurniawan (@dekakrens) Portfolio',
       images: [
         {
           url: project.thumbnailUrl || '/og-image.png',
@@ -84,7 +84,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     description: project.summary,
     author: {
       '@type': 'Person',
-      name: 'Deka Krens',
+      name: 'Deny Kurniawan',
+      alternateName: 'dekakrens',
       url: 'https://dekakrens.com',
     },
     about: project.category,

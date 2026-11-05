@@ -31,7 +31,7 @@ async function bootstrap() {
 
   // Swagger Documentation Setup
   const config = new DocumentBuilder()
-    .setTitle('Deka Krens Portfolio & Wiki API')
+    .setTitle('Deny Kurniawan (@dekakrens) Portfolio & Wiki API')
     .setDescription('Dedicated Backend API powered by NestJS, Drizzle ORM, and PostgreSQL')
     .setVersion('1.0')
     .addTag('Portfolio')

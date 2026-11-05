@@ -20,7 +20,7 @@ export class CreateContactInquiryDto {
   @MaxLength(255)
   subject: string;
 
-  @ApiProperty({ example: 'Hi Deka, I would love to discuss a project with you.', description: 'Message body' })
+  @ApiProperty({ example: 'Hi Deny, I would love to discuss a project with you.', description: 'Message body' })
   @IsString()
   @IsNotEmpty()
   message: string;

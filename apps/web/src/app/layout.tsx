@@ -21,13 +21,16 @@ export const dynamic = 'force-static';
 export const metadata: Metadata = {
   metadataBase: new URL('https://dekakrens.com'),
   title: {
-    default: 'Deka Krens | Senior Full-Stack & IoT Systems Engineer',
-    template: '%s | Deka Krens',
+    default: 'Deny Kurniawan (@dekakrens) | Senior Full-Stack & IoT Systems Engineer',
+    template: '%s | Deny Kurniawan (@dekakrens)',
   },
   description:
     'Senior Full-Stack & IoT Systems Engineer specializing in Next.js, NestJS, PostgreSQL, embedded C++ (ESP32), and edge computer vision systems.',
   keywords: [
+    'Deny Kurniawan',
+    'dekakrens',
     'Deka Krens',
+    'Deny Kurniawan portfolio',
     'Full-Stack Developer',
     'IoT Systems Engineer',
     'Next.js 15',
@@ -39,20 +42,20 @@ export const metadata: Metadata = {
     'Home Assistant',
     'TypeScript',
   ],
-  authors: [{ name: 'Deka Krens', url: 'https://dekakrens.com' }],
-  creator: 'Deka Krens',
+  authors: [{ name: 'Deny Kurniawan (dekakrens)', url: 'https://dekakrens.com' }],
+  creator: 'Deny Kurniawan (@dekakrens)',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://dekakrens.com',
-    siteName: 'Deka Krens Portfolio',
-    title: 'Deka Krens | Senior Full-Stack & IoT Systems Engineer',
+    siteName: 'Deny Kurniawan (@dekakrens) Portfolio',
+    title: 'Deny Kurniawan (@dekakrens) | Senior Full-Stack & IoT Systems Engineer',
     description:
-      'Explore featured projects, technical case studies, and engineering background.',
+      'Explore featured projects, technical case studies, and engineering background of Deny Kurniawan (@dekakrens).',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Deka Krens | Senior Full-Stack & IoT Systems Engineer',
+    title: 'Deny Kurniawan (@dekakrens) | Senior Full-Stack & IoT Systems Engineer',
     description:
       'Senior Full-Stack & IoT Systems Engineer specializing in Next.js, NestJS, and edge IoT devices.',
     creator: '@dekakrens',
@@ -69,11 +72,12 @@ export default async function RootLayout({
 }) {
   const profile = await getProfile();
 
-  // Root JSON-LD Schema (Person)
+  // Root JSON-LD Schema (Person) with alternateName for dekakrens handle
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Deka Krens',
+    name: 'Deny Kurniawan',
+    alternateName: 'dekakrens',
     jobTitle: profile.headline,
     url: 'https://dekakrens.com',
     sameAs: [

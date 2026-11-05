@@ -15,7 +15,7 @@ import { relations } from 'drizzle-orm';
 // -----------------------------------------------------------------------------
 export const profiles = pgTable('profiles', {
   id: uuid('id').defaultRandom().primaryKey(),
-  fullName: varchar('full_name', { length: 255 }).notNull().default('Deka Krens'),
+  fullName: varchar('full_name', { length: 255 }).notNull().default('Deny Kurniawan'),
   headline: varchar('headline', { length: 255 }).notNull(),
   bioShort: text('bio_short').notNull(),
   bioLong: text('bio_long'),

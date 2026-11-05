@@ -25,9 +25,14 @@ export function Navbar({ availabilityBadge }: { availabilityBadge?: string }) {
             DK
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-neutral-900 dark:text-white leading-tight">
-              Deka Krens
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className="font-semibold text-neutral-900 dark:text-white leading-tight">
+                Deny Kurniawan
+              </span>
+              <span className="text-xs text-neutral-400 font-mono hidden sm:inline">
+                @dekakrens
+              </span>
+            </div>
             <div className="flex items-center gap-1.5 text-xs text-neutral-500 dark:text-neutral-400">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="truncate max-w-[150px] sm:max-w-none">
