@@ -9,7 +9,7 @@ const connectionString =
   process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/portfolio_db';
 
 async function seed() {
-  console.log('🌱 Seeding database...');
+  console.log('🌱 Seeding database with Deny Kurniawan profile & resume data...');
   const client = postgres(connectionString);
   const db = drizzle(client, { schema });
 
@@ -18,17 +18,17 @@ async function seed() {
   await db.delete(schema.profiles);
   await db.insert(schema.profiles).values({
     fullName: 'Deny Kurniawan',
-    headline: 'Senior Full-Stack & IoT Systems Engineer',
+    headline: 'React Developer | DevOps-Minded Software Engineer',
     bioShort:
-      'Building performant, resilient web applications and edge-connected IoT devices. Specializing in Next.js, NestJS, high-throughput microservices, and embedded computer vision systems.',
+      'Frontend-focused Software Engineer with 4+ years of experience building and shipping production web and mobile applications using React, Next.js, React Native, and TypeScript. Strong feature development paired with hands-on Docker, CI/CD, and production monitoring.',
     bioLong:
-      'With over 6+ years of engineering across web, mobile, and hardware domains, I turn complex technical challenges into elegant, resilient products. From architecting distributed cloud backends to running real-time OCR algorithms on ESP32 microcontrollers, I enjoy building software that bridges the physical and digital worlds.',
-    availabilityBadge: 'Open for Select Contracts & Full-Time Roles',
-    resumeAssetUrl: '/assets/resume.pdf',
+      'Frontend-focused Software Engineer with 4+ years of experience building and shipping production web and mobile applications using React, React Native, and modern JavaScript/TypeScript. Combines strong feature development skills with hands-on exposure to Docker, CI/CD pipelines, and production monitoring, having supported deployments and troubleshooting for live applications. Experienced in collaborating with cross-functional teams and international clients across time zones, communicating clearly in written English through documentation, pull requests, and technical discussions, with a track record of delivering secure, user-friendly, and reliable software.',
+    availabilityBadge: 'Open for Opportunities & Contract Roles',
+    resumeAssetUrl: '/resume.pdf',
     socialLinks: {
       github: 'https://github.com/dekakrens',
       linkedin: 'https://linkedin.com/in/dekakrens',
-      email: 'dekakrens@gmail.com',
+      email: '0812deny@gmail.com',
       twitter: 'https://twitter.com/dekakrens',
     },
   });
@@ -40,56 +40,57 @@ async function seed() {
 
   const [catFrontend] = await db
     .insert(schema.skillCategories)
-    .values({ name: 'Frontend Architecture', displayOrder: 1 })
+    .values({ name: 'Frontend Engineering', displayOrder: 1 })
+    .returning();
+
+  const [catMobile] = await db
+    .insert(schema.skillCategories)
+    .values({ name: 'Mobile Development', displayOrder: 2 })
     .returning();
 
   const [catBackend] = await db
     .insert(schema.skillCategories)
-    .values({ name: 'Backend & Cloud Systems', displayOrder: 2 })
-    .returning();
-
-  const [catIoT] = await db
-    .insert(schema.skillCategories)
-    .values({ name: 'Embedded & IoT Systems', displayOrder: 3 })
+    .values({ name: 'Backend & Cloud Systems', displayOrder: 3 })
     .returning();
 
   const [catDevOps] = await db
     .insert(schema.skillCategories)
-    .values({ name: 'DevOps & Tooling', displayOrder: 4 })
+    .values({ name: 'DevOps & Embedded Systems', displayOrder: 4 })
     .returning();
 
-  // Skills
   const insertedSkills = await db
     .insert(schema.skills)
     .values([
       // Frontend
-      { categoryId: catFrontend.id, name: 'Next.js 15 (App Router)', iconSlug: 'nextjs', displayOrder: 1 },
-      { categoryId: catFrontend.id, name: 'React 19 / TypeScript', iconSlug: 'react', displayOrder: 2 },
-      { categoryId: catFrontend.id, name: 'Tailwind CSS', iconSlug: 'tailwind', displayOrder: 3 },
-      { categoryId: catFrontend.id, name: 'State Management (Zustand/Redux)', iconSlug: 'redux', displayOrder: 4 },
+      { categoryId: catFrontend.id, name: 'React.js', iconSlug: 'react', isFeatured: true, displayOrder: 1 },
+      { categoryId: catFrontend.id, name: 'Next.js 15 (App Router)', iconSlug: 'nextjs', isFeatured: true, displayOrder: 2 },
+      { categoryId: catFrontend.id, name: 'TypeScript & JavaScript', iconSlug: 'typescript', isFeatured: true, displayOrder: 3 },
+      { categoryId: catFrontend.id, name: 'Tailwind CSS v4', iconSlug: 'tailwind', isFeatured: true, displayOrder: 4 },
+      { categoryId: catFrontend.id, name: 'Redux & TanStack Query', iconSlug: 'redux', isFeatured: true, displayOrder: 5 },
+
+      // Mobile
+      { categoryId: catMobile.id, name: 'React Native', iconSlug: 'react', isFeatured: true, displayOrder: 1 },
+      { categoryId: catMobile.id, name: 'Flutter & Dart', iconSlug: 'flutter', isFeatured: true, displayOrder: 2 },
+      { categoryId: catMobile.id, name: 'Android & iOS Release', iconSlug: 'mobile', isFeatured: true, displayOrder: 3 },
+      { categoryId: catMobile.id, name: 'Mobile State Management', iconSlug: 'state', isFeatured: true, displayOrder: 4 },
 
       // Backend
-      { categoryId: catBackend.id, name: 'NestJS (Node.js)', iconSlug: 'nestjs', displayOrder: 1 },
-      { categoryId: catBackend.id, name: 'PostgreSQL & Drizzle ORM', iconSlug: 'postgresql', displayOrder: 2 },
-      { categoryId: catBackend.id, name: 'Python (FastAPI / OpenCV)', iconSlug: 'python', displayOrder: 3 },
-      { categoryId: catBackend.id, name: 'REST & GraphQL APIs', iconSlug: 'api', displayOrder: 4 },
+      { categoryId: catBackend.id, name: 'NestJS & Node.js', iconSlug: 'nestjs', isFeatured: true, displayOrder: 1 },
+      { categoryId: catBackend.id, name: 'Express.js', iconSlug: 'express', isFeatured: true, displayOrder: 2 },
+      { categoryId: catBackend.id, name: 'PostgreSQL & Drizzle ORM', iconSlug: 'postgresql', isFeatured: true, displayOrder: 3 },
+      { categoryId: catBackend.id, name: 'RESTful APIs & WebSockets', iconSlug: 'api', isFeatured: true, displayOrder: 4 },
 
-      // IoT
-      { categoryId: catIoT.id, name: 'ESP32 / ESP32-CAM', iconSlug: 'cpu', displayOrder: 1 },
-      { categoryId: catIoT.id, name: 'C++ / PlatformIO', iconSlug: 'cplusplus', displayOrder: 2 },
-      { categoryId: catIoT.id, name: 'Computer Vision & OCR', iconSlug: 'eye', displayOrder: 3 },
-      { categoryId: catIoT.id, name: 'MQTT / LoRaWAN', iconSlug: 'radio', displayOrder: 4 },
-
-      // DevOps
-      { categoryId: catDevOps.id, name: 'Docker & Docker Compose', iconSlug: 'docker', displayOrder: 1 },
-      { categoryId: catDevOps.id, name: 'CI/CD Pipelines (GitHub Actions)', iconSlug: 'github', displayOrder: 2 },
-      { categoryId: catDevOps.id, name: 'Linux System Administration', iconSlug: 'linux', displayOrder: 3 },
+      // DevOps & Embedded
+      { categoryId: catDevOps.id, name: 'Docker & Docker Compose', iconSlug: 'docker', isFeatured: true, displayOrder: 1 },
+      { categoryId: catDevOps.id, name: 'CI/CD (GitLab CI & GitHub Actions)', iconSlug: 'cicd', isFeatured: true, displayOrder: 2 },
+      { categoryId: catDevOps.id, name: 'Production Monitoring (Sentry)', iconSlug: 'sentry', isFeatured: true, displayOrder: 3 },
+      { categoryId: catDevOps.id, name: 'Embedded C++ / ESP32 & IoT', iconSlug: 'cpp', isFeatured: true, displayOrder: 4 },
     ])
     .returning();
 
   const skillMap = new Map(insertedSkills.map((s) => [s.name, s.id]));
 
-  // 3. Projects
+  // 3. Projects & Case Studies
   console.log('🚀 Seeding projects & case studies...');
   await db.delete(schema.projectCaseStudies);
   await db.delete(schema.projectTechStacks);
@@ -111,40 +112,7 @@ async function seed() {
     })
     .returning();
 
-  const [p2] = await db
-    .insert(schema.projects)
-    .values({
-      title: 'Enterprise Inventory & Analytics Portal',
-      slug: 'enterprise-inventory-portal',
-      summary:
-        'A multi-tenant hotel room inventory and asset tracking platform with sub-second analytics, role-based access control (RBAC), and automated multi-lingual exports.',
-      category: 'Full-Stack Web',
-      thumbnailUrl: '/projects/inventory.jpg',
-      liveDemoUrl: 'https://dekakrens.com/projects/enterprise-inventory-portal',
-      repoUrl: 'https://github.com/dekakrens/hotel-inventory',
-      isFeatured: true,
-      displayOrder: 2,
-    })
-    .returning();
-
-  const [p3] = await db
-    .insert(schema.projects)
-    .values({
-      title: 'LoRaWAN Long-Range Antenna Tuning Suite',
-      slug: 'lorawan-antenna-tuning',
-      summary:
-        'Hardware and software suite for analyzing RF signal attenuation, VSWR measurement, and impedance matching across 915MHz and 868MHz IoT sensor networks.',
-      category: 'Hardware & RF',
-      thumbnailUrl: '/projects/lora.jpg',
-      liveDemoUrl: 'https://dekakrens.com/projects/lorawan-antenna-tuning',
-      repoUrl: 'https://github.com/dekakrens/lora-tuning',
-      isFeatured: true,
-      displayOrder: 3,
-    })
-    .returning();
-
-  // Attach tech stacks
-  const p1Skills = ['ESP32 / ESP32-CAM', 'C++ / PlatformIO', 'Python (FastAPI / OpenCV)', 'Docker & Docker Compose']
+  const p1Skills = ['Embedded C++ / ESP32 & IoT', 'Docker & Docker Compose']
     .map((name) => skillMap.get(name))
     .filter(Boolean) as string[];
 
@@ -152,15 +120,6 @@ async function seed() {
     await db.insert(schema.projectTechStacks).values({ projectId: p1.id, skillId: sId });
   }
 
-  const p2Skills = ['Next.js 15 (App Router)', 'NestJS (Node.js)', 'PostgreSQL & Drizzle ORM', 'Tailwind CSS']
-    .map((name) => skillMap.get(name))
-    .filter(Boolean) as string[];
-
-  for (const sId of p2Skills) {
-    await db.insert(schema.projectTechStacks).values({ projectId: p2.id, skillId: sId });
-  }
-
-  // Case Studies
   await db.insert(schema.projectCaseStudies).values({
     projectId: p1.id,
     overview:
@@ -178,42 +137,145 @@ async function seed() {
     results: 'Achieved 99.2% OCR digit accuracy across 500+ real-world captures in low-light utility enclosures.',
   });
 
+  const [p2] = await db
+    .insert(schema.projects)
+    .values({
+      title: 'Real-Time GPS Tracker & Fleet Telemetry Dashboard',
+      slug: 'gps-tracker-dashboard',
+      summary:
+        'Interactive geospatial fleet monitoring web dashboard powered by Leaflet, real-time WebSocket communications, and responsive React frontend with video conferencing integration.',
+      category: 'Full-Stack Web',
+      thumbnailUrl: '/projects/gps-tracker.jpg',
+      liveDemoUrl: 'https://dekakrens.com/projects/gps-tracker-dashboard',
+      repoUrl: 'https://github.com/dekakrens/gps-tracker',
+      isFeatured: true,
+      displayOrder: 2,
+    })
+    .returning();
+
+  const p2Skills = ['React.js', 'TypeScript & JavaScript', 'RESTful APIs & WebSockets', 'Tailwind CSS v4', 'Docker & Docker Compose']
+    .map((name) => skillMap.get(name))
+    .filter(Boolean) as string[];
+
+  for (const sId of p2Skills) {
+    await db.insert(schema.projectTechStacks).values({ projectId: p2.id, skillId: sId });
+  }
+
+  await db.insert(schema.projectCaseStudies).values({
+    projectId: p2.id,
+    overview:
+      'A comprehensive fleet tracking and operational dashboard providing real-time location mapping, route playback, and live communication channels for dispatchers and drivers.',
+    architecture:
+      'High-performance React frontend utilizing Leaflet for smooth GIS vector rendering, WebSockets for sub-second position updates, and Agora SDK for real-time video conferencing.',
+    challenges:
+      'Handling high-frequency telemetry streams without UI stutter or memory leaks on long browser sessions.',
+    keyFeatures: [
+      'Real-time vehicle map visualization with dynamic route interpolation',
+      'Built-in video-conferencing powered by Agora for field communication',
+      'Responsive mobile-friendly dispatch controls and geofence alerts',
+    ],
+    results: 'Supported real-time fleet operations with sub-second telemetry delivery and zero UI lag.',
+  });
+
+  const [p3] = await db
+    .insert(schema.projects)
+    .values({
+      title: 'Catena: Abnormal Heart Rate Monitoring with Real-Time Notification',
+      slug: 'catena-iot-heart-rate-monitoring',
+      summary:
+        'IoT health monitoring wearable and React Native companion app for arrhythmia detection, custom PCB hardware design, BLE data streaming, and automated emergency notifications.',
+      category: 'Mobile & Health IoT',
+      thumbnailUrl: '/projects/catena.jpg',
+      liveDemoUrl: 'https://dekakrens.com/projects/catena-iot-heart-rate-monitoring',
+      repoUrl: 'https://github.com/dekakrens/catena-arrhythmia-iot',
+      isFeatured: true,
+      displayOrder: 3,
+    })
+    .returning();
+
+  const p3Skills = ['React Native', 'Embedded C++ / ESP32 & IoT']
+    .map((name) => skillMap.get(name))
+    .filter(Boolean) as string[];
+
+  for (const sId of p3Skills) {
+    await db.insert(schema.projectTechStacks).values({ projectId: p3.id, skillId: sId });
+  }
+
+  await db.insert(schema.projectCaseStudies).values({
+    projectId: p3.id,
+    overview:
+      'Bachelor Thesis project at Telkom University engineering an end-to-end wearable health monitoring system that detects arrhythmia abnormalities and notifies emergency contacts in real time.',
+    architecture:
+      'Custom IoT sensor node with designed PCB streaming continuous PPG heart rate metrics over Bluetooth Low Energy (BLE) to a cross-platform React Native companion app with cloud alerting.',
+    challenges:
+      'Maintaining stable BLE packet transmission during physical activity while minimizing battery drain on custom microcontroller hardware.',
+    keyFeatures: [
+      'Custom PCB schematic and layout optimized for low-power biometric sensing',
+      'Arrhythmia anomaly detection algorithm with threshold calibration',
+      'Cross-platform React Native mobile app with real-time waveform visualization',
+      'Instant push notification triggers for detected heart abnormalities',
+    ],
+    results: 'Successfully defended with high honors at Telkom University; achieved 98%+ reliability in BLE transmission tests.',
+  });
+
   // 4. Work Experience
   console.log('💼 Seeding work experience...');
   await db.delete(schema.workExperiences);
   await db.insert(schema.workExperiences).values([
     {
-      companyName: 'Tech Innovators Co.',
-      companyUrl: 'https://example.com',
-      role: 'Lead Full-Stack & Systems Engineer',
-      location: 'Remote / Jakarta, Indonesia',
-      startDate: '2023',
+      companyName: 'Meetaza Prawira Media',
+      companyUrl: 'https://meetaza.com',
+      role: 'Front End & Mobile Application Developer',
+      location: 'Yogyakarta, Indonesia',
+      startDate: 'Oct 2021',
       endDate: 'Present',
       isCurrent: true,
       description:
-        'Architecting distributed web services, IoT telemetry ingestion pipelines, and modern web dashboards with strict performance budgets and sub-second SLAs.',
+        'Developing and maintaining responsive web and mobile applications, ensuring consistent updates, user-friendly UI, and stable performance in production.',
       highlights: [
-        'Spearheaded migration of legacy monolith to NestJS microservices and Next.js App Router frontends.',
-        'Reduced database query latency by 45% with indexed Drizzle ORM schemas and Redis caching.',
-        'Mentored junior engineers and instituted CI/CD test automation practices across engineering teams.',
+        'Built a cross-platform Android application using React Native and Flutter, cutting company development costs by 50%.',
+        'Designed and shipped an AI-powered chat feature within a web application, focused on a clean, user-friendly experience.',
+        'Developed a GPS tracker web dashboard using Leaflet and a video-conferencing application using Agora.',
+        'Implemented and consumed RESTful APIs and WebSocket communications to power real-time features.',
+        'Contributed to deployment workflows using Docker containers and CI/CD pipelines (GitHub Actions/GitLab CI) for consistent staging-to-production releases.',
+        'Assisted with monitoring application health and troubleshooting production issues, using Sentry for error tracking to speed up incident resolution.',
+        'Delivered 4+ production web applications and shipped 1 Android and 1 iOS application from development through release.',
       ],
       displayOrder: 1,
     },
     {
-      companyName: 'Digital Solutions Lab',
+      companyName: 'Goritma Tech',
       companyUrl: 'https://example.com',
-      role: 'Full-Stack Developer',
-      location: 'Denpasar, Bali',
-      startDate: '2021',
-      endDate: '2023',
+      role: 'Mobile Application Developer (Freelance)',
+      location: 'Remote, Indonesia',
+      startDate: 'Jul 2021',
+      endDate: 'Sep 2021',
       isCurrent: false,
       description:
-        'Developed SaaS web portals, responsive mobile applications, and internal automation utilities for client projects.',
+        'Engineered a health-focused mobile application for tracking menstrual and pregnancy health.',
       highlights: [
-        'Built real-time websocket reporting dashboards handling 10,000+ daily events.',
-        'Engineered responsive web applications with automated Lighthouse score optimization > 95.',
+        'Developed an Android application with robust state management and integrated RESTful APIs.',
+        'Collaborated with a backend developer to integrate application data and services.',
+        'Successfully delivered a health-focused mobile application to the Google Play Store within 3 months.',
       ],
       displayOrder: 2,
+    },
+    {
+      companyName: 'Digital Talent Incubator',
+      companyUrl: 'https://example.com',
+      role: 'Android Developer',
+      location: 'Indonesia',
+      startDate: 'Sep 2020',
+      endDate: 'Dec 2020',
+      isCurrent: false,
+      description:
+        'Intensive engineering incubator focused on mobile application development and modern DevOps workflows.',
+      highlights: [
+        'Developed an Android application using the React Native framework.',
+        'Integrated Firebase Authentication and Firestore for backend services.',
+        'Gained foundational, hands-on experience with CI/CD pipelines for continuous delivery.',
+      ],
+      displayOrder: 3,
     },
   ]);
 

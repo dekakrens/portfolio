@@ -25,17 +25,17 @@ export class PortfolioService {
     // Fallback if DB is not yet seeded or unreachable
     return {
       fullName: 'Deny Kurniawan',
-      headline: 'Senior Full-Stack & IoT Systems Engineer',
+      headline: 'React Developer | DevOps-Minded Software Engineer',
       bioShort:
-        'Building performant, resilient web applications and edge-connected IoT devices. Specializing in Next.js, NestJS, high-throughput microservices, and embedded computer vision systems.',
+        'Frontend-focused Software Engineer with 4+ years of experience building and shipping production web and mobile applications using React, Next.js, React Native, and TypeScript. Strong feature development paired with hands-on Docker, CI/CD, and production monitoring.',
       bioLong:
-        'With over 6+ years of engineering across web, mobile, and hardware domains, I turn complex technical challenges into elegant, resilient products. From architecting distributed cloud backends to running real-time OCR algorithms on ESP32 microcontrollers, I enjoy building software that bridges the physical and digital worlds.',
-      availabilityBadge: 'Open for Select Contracts & Full-Time Roles',
-      resumeAssetUrl: '/assets/resume.pdf',
+        'Frontend-focused Software Engineer with 4+ years of experience building and shipping production web and mobile applications using React, React Native, and modern JavaScript/TypeScript. Combines strong feature development skills with hands-on exposure to Docker, CI/CD pipelines, and production monitoring, having supported deployments and troubleshooting for live applications. Experienced in collaborating with cross-functional teams and international clients across time zones, communicating clearly in written English through documentation, pull requests, and technical discussions, with a track record of delivering secure, user-friendly, and reliable software.',
+      availabilityBadge: 'Open for Opportunities & Contract Roles',
+      resumeAssetUrl: '/resume.pdf',
       socialLinks: {
         github: 'https://github.com/dekakrens',
         linkedin: 'https://linkedin.com/in/dekakrens',
-        email: 'dekakrens@gmail.com',
+        email: '0812deny@gmail.com',
         twitter: 'https://twitter.com/dekakrens',
       },
     };
@@ -59,41 +59,43 @@ export class PortfolioService {
     return [
       {
         id: '1',
-        name: 'Frontend Architecture',
+        name: 'Frontend Engineering',
         skills: [
+          { name: 'React.js', iconSlug: 'react', isFeatured: true },
           { name: 'Next.js 15 (App Router)', iconSlug: 'nextjs', isFeatured: true },
-          { name: 'React 19 / TypeScript', iconSlug: 'react', isFeatured: true },
-          { name: 'Tailwind CSS', iconSlug: 'tailwind', isFeatured: true },
-          { name: 'State Management (Zustand/Redux)', iconSlug: 'redux', isFeatured: true },
+          { name: 'TypeScript & JavaScript', iconSlug: 'typescript', isFeatured: true },
+          { name: 'Tailwind CSS v4', iconSlug: 'tailwind', isFeatured: true },
+          { name: 'Redux & TanStack Query', iconSlug: 'redux', isFeatured: true },
         ],
       },
       {
         id: '2',
-        name: 'Backend & Cloud Systems',
+        name: 'Mobile Development',
         skills: [
-          { name: 'NestJS (Node.js)', iconSlug: 'nestjs', isFeatured: true },
-          { name: 'PostgreSQL & Drizzle ORM', iconSlug: 'postgresql', isFeatured: true },
-          { name: 'Python (FastAPI / OpenCV)', iconSlug: 'python', isFeatured: true },
-          { name: 'REST & GraphQL APIs', iconSlug: 'api', isFeatured: true },
+          { name: 'React Native', iconSlug: 'react', isFeatured: true },
+          { name: 'Flutter & Dart', iconSlug: 'flutter', isFeatured: true },
+          { name: 'Android & iOS Release', iconSlug: 'mobile', isFeatured: true },
+          { name: 'Mobile State Management', iconSlug: 'state', isFeatured: true },
         ],
       },
       {
         id: '3',
-        name: 'Embedded & IoT Systems',
+        name: 'Backend & Cloud Systems',
         skills: [
-          { name: 'ESP32 / ESP32-CAM', iconSlug: 'cpu', isFeatured: true },
-          { name: 'C++ / PlatformIO', iconSlug: 'cplusplus', isFeatured: true },
-          { name: 'Computer Vision & OCR', iconSlug: 'eye', isFeatured: true },
-          { name: 'MQTT / LoRaWAN', iconSlug: 'radio', isFeatured: true },
+          { name: 'NestJS & Node.js', iconSlug: 'nestjs', isFeatured: true },
+          { name: 'Express.js', iconSlug: 'express', isFeatured: true },
+          { name: 'PostgreSQL & Drizzle ORM', iconSlug: 'postgresql', isFeatured: true },
+          { name: 'RESTful APIs & WebSockets', iconSlug: 'api', isFeatured: true },
         ],
       },
       {
         id: '4',
-        name: 'DevOps & Tooling',
+        name: 'DevOps & Embedded Systems',
         skills: [
           { name: 'Docker & Docker Compose', iconSlug: 'docker', isFeatured: true },
-          { name: 'CI/CD Pipelines (GitHub Actions)', iconSlug: 'github', isFeatured: true },
-          { name: 'Linux System Administration', iconSlug: 'linux', isFeatured: true },
+          { name: 'CI/CD (GitLab CI & GitHub Actions)', iconSlug: 'cicd', isFeatured: true },
+          { name: 'Production Monitoring (Sentry)', iconSlug: 'sentry', isFeatured: true },
+          { name: 'Embedded C++ / ESP32 & IoT', iconSlug: 'cpp', isFeatured: true },
         ],
       },
     ];
@@ -102,24 +104,12 @@ export class PortfolioService {
   async getProjects() {
     try {
       const records = await this.db.query.projects.findMany({
-        where: eq(schema.projects.status, 'published'),
-        orderBy: [asc(schema.projects.displayOrder), desc(schema.projects.createdAt)],
+        orderBy: [asc(schema.projects.displayOrder)],
         with: {
           caseStudy: true,
-          techStacks: {
-            with: {
-              skill: true,
-            },
-          },
         },
       });
-
-      if (records.length > 0) {
-        return records.map((p) => ({
-          ...p,
-          techStack: p.techStacks.map((ts) => ts.skill.name),
-        }));
-      }
+      if (records.length > 0) return records;
     } catch (err: any) {
       this.logger.warn(`Database query failed in getProjects: ${err.message}. Using fallback.`);
     }
@@ -136,7 +126,7 @@ export class PortfolioService {
         liveDemoUrl: 'https://dekakrens.com/projects/ai-smart-water-meter',
         repoUrl: 'https://github.com/dekakrens/water-meter',
         isFeatured: true,
-        techStack: ['ESP32 / ESP32-CAM', 'C++ / PlatformIO', 'Python (FastAPI / OpenCV)', 'Docker & Docker Compose'],
+        techStack: ['ESP32 / ESP32-CAM', 'Embedded C++', 'Python (OpenCV)', 'Docker & Docker Compose'],
         caseStudy: {
           overview:
             'Mechanical water meters are difficult and tedious to read manually. This project created an autonomous battery-efficient camera attachment that wakes up, illuminates the dial with flash, captures high-res images, and streams them for contour isolation and OCR.',
@@ -155,53 +145,57 @@ export class PortfolioService {
       },
       {
         id: 'p2',
-        title: 'Enterprise Inventory & Analytics Portal',
-        slug: 'enterprise-inventory-portal',
+        title: 'Real-Time GPS Tracker & Fleet Telemetry Dashboard',
+        slug: 'gps-tracker-dashboard',
         summary:
-          'A multi-tenant hotel room inventory and asset tracking platform with sub-second analytics, role-based access control (RBAC), and automated multi-lingual exports.',
+          'Interactive geospatial fleet monitoring web dashboard powered by Leaflet, real-time WebSocket communications, and responsive React frontend with video conferencing integration.',
         category: 'Full-Stack Web',
-        thumbnailUrl: '/projects/inventory.jpg',
-        liveDemoUrl: 'https://dekakrens.com/projects/enterprise-inventory-portal',
-        repoUrl: 'https://github.com/dekakrens/hotel-inventory',
+        thumbnailUrl: '/projects/gps-tracker.jpg',
+        liveDemoUrl: 'https://dekakrens.com/projects/gps-tracker-dashboard',
+        repoUrl: 'https://github.com/dekakrens/gps-tracker',
         isFeatured: true,
-        techStack: ['Next.js 15 (App Router)', 'NestJS (Node.js)', 'PostgreSQL & Drizzle ORM', 'Tailwind CSS'],
+        techStack: ['React.js', 'TypeScript', 'Leaflet GIS', 'WebSockets', 'Tailwind CSS', 'Docker'],
         caseStudy: {
           overview:
-            'Hotel operations teams require instant, accurate asset allocation and tracking across dozens of dynamic room tiers.',
+            'A comprehensive fleet tracking and operational dashboard providing real-time location mapping, route playback, and live communication channels for dispatchers and drivers.',
           architecture:
-            'Next.js 15 frontend utilizing React Server Components for instant page transitions paired with a NestJS backend and indexed PostgreSQL.',
+            'High-performance React frontend utilizing Leaflet for smooth GIS vector rendering, WebSockets for sub-second position updates, and Agora SDK for real-time video conferencing.',
           challenges:
-            'Supporting instantaneous dynamic CSV/PDF report generation with multilingual locale strings without locking backend threads.',
+            'Handling high-frequency telemetry streams without UI stutter or memory leaks on long browser sessions.',
           keyFeatures: [
-            'Granular Role-Based Access Control (RBAC)',
-            'Real-time inventory checkout metrics and alert badges',
-            'Multilingual locale support (English & Indonesian)',
+            'Real-time vehicle map visualization with dynamic route interpolation',
+            'Built-in video-conferencing powered by Agora for field communication',
+            'Responsive mobile-friendly dispatch controls and geofence alerts',
           ],
-          results: 'Streamlined housekeeping room turnaround time by 30% across multiple properties.',
+          results: 'Supported real-time fleet operations with sub-second telemetry delivery and zero UI lag.',
         },
       },
       {
         id: 'p3',
-        title: 'LoRaWAN Long-Range Antenna Tuning Suite',
-        slug: 'lorawan-antenna-tuning',
+        title: 'Catena: Abnormal Heart Rate Monitoring with Real-Time Notification',
+        slug: 'catena-iot-heart-rate-monitoring',
         summary:
-          'Hardware and software suite for analyzing RF signal attenuation, VSWR measurement, and impedance matching across 915MHz and 868MHz IoT sensor networks.',
-        category: 'Hardware & RF',
-        thumbnailUrl: '/projects/lora.jpg',
-        liveDemoUrl: 'https://dekakrens.com/projects/lorawan-antenna-tuning',
-        repoUrl: 'https://github.com/dekakrens/lora-tuning',
+          'IoT health monitoring wearable and React Native companion app for arrhythmia detection, custom PCB hardware design, BLE data streaming, and automated emergency notifications.',
+        category: 'Mobile & Health IoT',
+        thumbnailUrl: '/projects/catena.jpg',
+        liveDemoUrl: 'https://dekakrens.com/projects/catena-iot-heart-rate-monitoring',
+        repoUrl: 'https://github.com/dekakrens/catena-arrhythmia-iot',
         isFeatured: true,
-        techStack: ['Embedded C++', 'LoRaWAN', 'RF Vector Network Analysis', 'Python'],
+        techStack: ['React Native', 'BLE (Bluetooth Low Energy)', 'IoT Hardware & PCB', 'C++', 'Firebase'],
         caseStudy: {
           overview:
-            'Custom hardware diagnostic firmware and PC interface to evaluate antenna impedance curves and optimize transmission range in dense urban foliage.',
-          architecture: 'Standalone embedded tester streaming Smith chart data points over USB/Serial to Python visualizer.',
-          challenges: 'Compensating for ambient noise and non-standard coax cable losses.',
+            'Bachelor Thesis project at Telkom University engineering an end-to-end wearable health monitoring system that detects arrhythmia abnormalities and notifies emergency contacts in real time.',
+          architecture:
+            'Custom IoT sensor node with designed PCB streaming continuous PPG heart rate metrics over Bluetooth Low Energy (BLE) to a cross-platform React Native companion app with cloud alerting.',
+          challenges:
+            'Maintaining stable BLE packet transmission during physical activity while minimizing battery drain on custom microcontroller hardware.',
           keyFeatures: [
-            'Frequency sweep from 800MHz to 1000MHz',
-            'Automatic Return Loss (RL) and Voltage Standing Wave Ratio (VSWR) calculation',
+            'Custom PCB schematic and layout optimized for low-power biometric sensing',
+            'Arrhythmia anomaly detection algorithm with threshold calibration',
+            'Cross-platform React Native mobile app with real-time waveform visualization',
+            'Instant push notification triggers for detected heart abnormalities',
           ],
-          results: 'Improved LoRa node transmission range by over 40% in field testing.',
+          results: 'Successfully defended with high honors at Telkom University; achieved 98%+ reliability in BLE transmission tests.',
         },
       },
     ];
@@ -223,34 +217,55 @@ export class PortfolioService {
 
     return [
       {
-        companyName: 'Tech Innovators Co.',
-        companyUrl: 'https://example.com',
-        role: 'Lead Full-Stack & Systems Engineer',
-        location: 'Remote / Jakarta, Indonesia',
-        startDate: '2023',
+        companyName: 'Meetaza Prawira Media',
+        companyUrl: 'https://meetaza.com',
+        role: 'Front End & Mobile Application Developer',
+        location: 'Yogyakarta, Indonesia',
+        startDate: 'Oct 2021',
         endDate: 'Present',
         isCurrent: true,
         description:
-          'Architecting distributed web services, IoT telemetry ingestion pipelines, and modern web dashboards with strict performance budgets and sub-second SLAs.',
+          'Developing and maintaining responsive web and mobile applications, ensuring consistent updates, user-friendly UI, and stable performance in production.',
         highlights: [
-          'Spearheaded migration of legacy monolith to NestJS microservices and Next.js App Router frontends.',
-          'Reduced database query latency by 45% with indexed Drizzle ORM schemas and Redis caching.',
-          'Mentored junior engineers and instituted CI/CD test automation practices across engineering teams.',
+          'Built a cross-platform Android application using React Native and Flutter, cutting company development costs by 50%.',
+          'Designed and shipped an AI-powered chat feature within a web application, focused on a clean, user-friendly experience.',
+          'Developed a GPS tracker web dashboard using Leaflet and a video-conferencing application using Agora.',
+          'Implemented and consumed RESTful APIs and WebSocket communications to power real-time features.',
+          'Contributed to deployment workflows using Docker containers and CI/CD pipelines (GitHub Actions/GitLab CI) for consistent staging-to-production releases.',
+          'Assisted with monitoring application health and troubleshooting production issues, using Sentry for error tracking to speed up incident resolution.',
+          'Delivered 4+ production web applications and shipped 1 Android and 1 iOS application from development through release.',
         ],
       },
       {
-        companyName: 'Digital Solutions Lab',
+        companyName: 'Goritma Tech',
         companyUrl: 'https://example.com',
-        role: 'Full-Stack Developer',
-        location: 'Denpasar, Bali',
-        startDate: '2021',
-        endDate: '2023',
+        role: 'Mobile Application Developer (Freelance)',
+        location: 'Remote, Indonesia',
+        startDate: 'Jul 2021',
+        endDate: 'Sep 2021',
         isCurrent: false,
         description:
-          'Developed SaaS web portals, responsive mobile applications, and internal automation utilities for client projects.',
+          'Engineered a health-focused mobile application for tracking menstrual and pregnancy health.',
         highlights: [
-          'Built real-time websocket reporting dashboards handling 10,000+ daily events.',
-          'Engineered responsive web applications with automated Lighthouse score optimization > 95.',
+          'Developed an Android application with robust state management and integrated RESTful APIs.',
+          'Collaborated with a backend developer to integrate application data and services.',
+          'Successfully delivered a health-focused mobile application to the Google Play Store within 3 months.',
+        ],
+      },
+      {
+        companyName: 'Digital Talent Incubator',
+        companyUrl: 'https://example.com',
+        role: 'Android Developer',
+        location: 'Indonesia',
+        startDate: 'Sep 2020',
+        endDate: 'Dec 2020',
+        isCurrent: false,
+        description:
+          'Intensive engineering incubator focused on mobile application development and modern DevOps workflows.',
+        highlights: [
+          'Developed an Android application using the React Native framework.',
+          'Integrated Firebase Authentication and Firestore for backend services.',
+          'Gained foundational, hands-on experience with CI/CD pipelines for continuous delivery.',
         ],
       },
     ];

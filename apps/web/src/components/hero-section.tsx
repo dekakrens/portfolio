@@ -18,9 +18,9 @@ export function HeroSection({ profile }: { profile: Profile }) {
 
         {/* Title & Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-[1.1] mb-6">
-          Crafting Resilient{' '}
+          React Developer &amp;{' '}
           <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
-            Web &amp; IoT Systems
+            DevOps-Minded Engineer
           </span>
         </h1>
 
