@@ -35,6 +35,9 @@ async function bootstrap() {
     .setDescription('Dedicated Backend API powered by NestJS, Drizzle ORM, and PostgreSQL')
     .setVersion('1.0')
     .addTag('Portfolio')
+    .addTag('Admin CMS')
+    .addTag('Authentication')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

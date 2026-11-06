@@ -206,3 +206,16 @@ export const wikiArticlesRelations = relations(wikiArticles, ({ one }) => ({
     references: [wikiCategories.id],
   }),
 }));
+
+// -----------------------------------------------------------------------------
+// Admin / Authentication Domain
+// -----------------------------------------------------------------------------
+export const adminUsers = pgTable('admin_users', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  email: varchar('email', { length: 255 }).unique().notNull(),
+  passwordHash: text('password_hash').notNull(),
+  name: varchar('name', { length: 255 }).notNull().default('Deny Kurniawan'),
+  role: varchar('role', { length: 50 }).notNull().default('admin'),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});

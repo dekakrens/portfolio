@@ -28,6 +28,9 @@ export function Footer() {
           <Link href="#contact" className="hover:text-neutral-900 dark:hover:text-white transition-colors">
             Contact
           </Link>
+          <Link href="/admin" className="hover:text-neutral-900 dark:hover:text-white transition-colors opacity-70 hover:opacity-100">
+            Admin CMS
+          </Link>
         </div>
 
         <div className="text-xs text-neutral-400 dark:text-neutral-500">

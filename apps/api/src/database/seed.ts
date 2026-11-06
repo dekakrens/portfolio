@@ -579,6 +579,21 @@ When Googlebot, Bing, or social crawlers request \`/projects/ai-smart-water-mete
     },
   ]);
 
+  // 7. Admin User
+  console.log('🔐 Seeding admin user...');
+  await db.delete(schema.adminUsers);
+  const { scryptSync, randomBytes } = await import('node:crypto');
+  const salt = randomBytes(16).toString('hex');
+  const derivedKey = scryptSync(process.env.ADMIN_PASSWORD || 'dekakrens2026!', salt, 64);
+  const passwordHash = `${salt}:${derivedKey.toString('hex')}`;
+
+  await db.insert(schema.adminUsers).values({
+    email: 'dekakrens@gmail.com',
+    passwordHash,
+    name: 'Deny Kurniawan',
+    role: 'admin',
+  });
+
   console.log('✅ Seeding completed successfully!');
   await client.end();
 }
