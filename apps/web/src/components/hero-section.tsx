@@ -46,8 +46,8 @@ function HighlightIcon({ name, className }: { name?: string; className?: string 
 export function HeroSection({ profile }: { profile: Profile }) {
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
-      {/* Subtle background glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 blur-[100px] -z-10 rounded-full pointer-events-none" />
+      {/* Subtle fluid background glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-tr from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 blur-[100px] -z-10 rounded-full pointer-events-none animate-fluid-glow" />
 
       <div className="max-w-4xl mx-auto text-center px-4 sm:px-6">
         {/* Availability Badge */}
@@ -73,7 +73,7 @@ export function HeroSection({ profile }: { profile: Profile }) {
         <div className="flex flex-wrap items-center justify-center gap-3.5 mb-12">
           <a
             href="#projects"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:hover:bg-neutral-100 dark:text-neutral-900 font-semibold text-sm transition-all shadow-md hover:shadow-lg"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:hover:bg-neutral-100 dark:text-neutral-900 font-semibold text-sm transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95"
           >
             <span>View Featured Work</span>
             <ArrowRight className="w-4 h-4" />
@@ -81,7 +81,7 @@ export function HeroSection({ profile }: { profile: Profile }) {
 
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-800 dark:text-neutral-200 font-semibold text-sm transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-800 dark:text-neutral-200 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
           >
             <span>Get in Touch</span>
           </a>
@@ -91,7 +91,7 @@ export function HeroSection({ profile }: { profile: Profile }) {
               href={profile.resumeAssetUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white text-sm font-medium transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white text-sm font-medium transition-colors hover:-translate-y-0.5"
             >
               <Download className="w-4 h-4" />
               <span>Resume</span>
@@ -151,11 +151,11 @@ export function HeroSection({ profile }: { profile: Profile }) {
             {profile.highlights.map((item, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40"
+                className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md hover:border-emerald-500/40 dark:hover:border-emerald-500/40 group"
               >
                 <HighlightIcon
                   name={item.icon}
-                  className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mb-2"
+                  className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mb-2 transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="text-xl font-bold text-neutral-900 dark:text-white">
                   {item.title}

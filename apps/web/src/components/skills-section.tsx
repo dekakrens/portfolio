@@ -29,10 +29,10 @@ export function SkillsSection({ categories }: { categories: SkillCategory[] }) {
           {categories.map((cat) => (
             <div
               key={cat.id}
-              className="p-6 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900 shadow-sm flex flex-col"
+              className="scroll-reveal p-6 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900 shadow-sm flex flex-col transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md hover:border-emerald-500/30 dark:hover:border-emerald-500/30 group"
             >
               <div className="flex items-center gap-3 mb-5">
-                <div className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800">
+                <div className="p-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 transition-transform duration-300 group-hover:scale-110">
                   {categoryIcons[cat.name] || <Wrench className="w-5 h-5 text-neutral-500" />}
                 </div>
                 <h3 className="font-bold text-neutral-900 dark:text-white text-base">

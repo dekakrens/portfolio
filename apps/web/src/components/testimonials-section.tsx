@@ -27,7 +27,7 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
           {testimonials.map((t, idx) => (
             <div
               key={idx}
-              className="p-8 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900 shadow-sm flex flex-col justify-between relative group hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors"
+              className="scroll-reveal p-8 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900 shadow-sm flex flex-col justify-between relative group hover:border-emerald-500/30 dark:hover:border-emerald-500/30 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg"
             >
               <Quote className="w-8 h-8 text-neutral-200 dark:text-neutral-800 mb-4" />
 

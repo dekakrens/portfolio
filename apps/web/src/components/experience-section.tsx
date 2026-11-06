@@ -25,17 +25,17 @@ export function ExperienceSection({ experiences }: { experiences: WorkExperience
         {/* Timeline List */}
         <div className="relative pl-6 sm:pl-8 border-l border-neutral-200 dark:border-neutral-800 space-y-12">
           {experiences.map((exp, index) => (
-            <div key={index} className="relative group">
+            <div key={index} className="scroll-reveal relative group">
               {/* Dot */}
               <div
-                className={`absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full border-2 bg-white dark:bg-neutral-950 transition-colors ${
+                className={`absolute -left-[31px] sm:-left-[39px] top-1.5 w-4 h-4 rounded-full border-2 bg-white dark:bg-neutral-950 transition-all duration-300 group-hover:scale-125 ${
                   exp.isCurrent
                     ? 'border-emerald-500 bg-emerald-500/20'
-                    : 'border-neutral-400 dark:border-neutral-600'
+                    : 'border-neutral-400 dark:border-neutral-600 group-hover:border-emerald-500'
                 }`}
               />
 
-              <div className="p-6 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900/60 shadow-sm space-y-4">
+              <div className="p-6 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900/60 shadow-sm space-y-4 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md hover:border-emerald-500/30 dark:hover:border-emerald-500/30">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <h3 className="text-lg font-bold text-neutral-900 dark:text-white">

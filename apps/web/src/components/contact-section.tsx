@@ -59,7 +59,7 @@ export function ContactSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Info Card */}
-          <div className="md:col-span-2 space-y-6">
+          <div className="scroll-reveal md:col-span-2 space-y-6">
             <div className="p-6 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50 dark:bg-neutral-900/60 space-y-4">
               <h3 className="font-bold text-neutral-900 dark:text-white text-base">
                 Direct Contact
@@ -104,7 +104,7 @@ export function ContactSection() {
           </div>
 
           {/* Form */}
-          <div className="md:col-span-3">
+          <div className="scroll-reveal md:col-span-3">
             <form
               onSubmit={handleSubmit}
               className="p-6 sm:p-8 rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900 shadow-sm space-y-4"

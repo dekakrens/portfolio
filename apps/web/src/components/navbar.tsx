@@ -2,18 +2,27 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './theme-toggle';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
 export function Navbar({ availabilityBadge }: { availabilityBadge?: string }) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const pathname = usePathname();
+
+  const getHref = (target: string) => {
+    if (target.startsWith('#')) {
+      return pathname === '/' ? target : `/${target}`;
+    }
+    return target;
+  };
 
   const navLinks = [
-    { label: 'Projects', href: '/#projects' },
-    { label: 'Skills', href: '/#skills' },
-    { label: 'Experience', href: '/#experience' },
-    { label: 'Wiki', href: '/wiki' },
-    { label: 'Contact', href: '/#contact' },
+    { label: 'Projects', target: '#projects' },
+    { label: 'Skills', target: '#skills' },
+    { label: 'Experience', target: '#experience' },
+    { label: 'Wiki', target: '/wiki' },
+    { label: 'Contact', target: '#contact' },
   ];
 
   return (
@@ -46,8 +55,8 @@ export function Navbar({ availabilityBadge }: { availabilityBadge?: string }) {
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <a
-              key={link.href}
-              href={link.href}
+              key={link.target}
+              href={getHref(link.target)}
               className="text-sm font-medium text-neutral-600 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white transition-colors"
             >
               {link.label}
@@ -59,8 +68,8 @@ export function Navbar({ availabilityBadge }: { availabilityBadge?: string }) {
         <div className="hidden md:flex items-center gap-3">
           <ThemeToggle />
           <a
-            href="#contact"
-            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:hover:bg-neutral-100 dark:text-neutral-900 transition-colors shadow-sm"
+            href={getHref('#contact')}
+            className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:hover:bg-neutral-100 dark:text-neutral-900 transition-colors shadow-sm active:scale-95 duration-200"
           >
             <span>Let&apos;s Talk</span>
             <ArrowUpRight className="w-4 h-4" />
@@ -85,8 +94,8 @@ export function Navbar({ availabilityBadge }: { availabilityBadge?: string }) {
         <div className="md:hidden border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 px-4 pt-2 pb-6 space-y-3">
           {navLinks.map((link) => (
             <a
-              key={link.href}
-              href={link.href}
+              key={link.target}
+              href={getHref(link.target)}
               onClick={() => setMobileMenuOpen(false)}
               className="block py-2 text-base font-medium text-neutral-700 hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white"
             >
@@ -95,9 +104,9 @@ export function Navbar({ availabilityBadge }: { availabilityBadge?: string }) {
           ))}
           <div className="pt-2">
             <a
-              href="#contact"
+              href={getHref('#contact')}
               onClick={() => setMobileMenuOpen(false)}
-              className="block w-full text-center px-4 py-2.5 text-sm font-medium rounded-lg bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
+              className="block w-full text-center px-4 py-2.5 text-sm font-medium rounded-lg bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 active:scale-95 transition-all"
             >
               Let&apos;s Talk
             </a>

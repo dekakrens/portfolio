@@ -54,7 +54,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="flex flex-col rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 overflow-hidden hover:border-neutral-300 dark:hover:border-neutral-700 transition-all hover:shadow-lg group"
+              className="scroll-reveal flex flex-col rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/60 overflow-hidden hover:border-emerald-500/40 dark:hover:border-emerald-500/40 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-xl hover:shadow-emerald-500/5 group"
             >
               {/* Card Header with category badge & icon */}
               <div className="p-6 flex-1 flex flex-col">
