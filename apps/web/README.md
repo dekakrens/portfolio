@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# apps/web — Next.js 15 Frontend & Presentation
 
-## Getting Started
+This is the frontend application for the **Deka Krens Developer Platform**, built with **Next.js 15 (App Router)**, **React 19**, and **Tailwind CSS v4**.
 
-First, run the development server:
+---
+
+## 🏗️ Architecture & Route Groups
+
+The application uses App Router route groups to cleanly separate page layouts:
+
+- `src/app/(portfolio)/`: Landing page (`/`), Hero section with dynamic metric cards, Projects showcase, Skills matrix, Career Journey timeline, Testimonials, and Case Studies (`/projects/[slug]`).
+- `src/app/wiki/`: Digital Garden and technical engineering notes (`/wiki` and `/wiki/[slug]`) with dedicated `WikiNavbar` and category navigation.
+- `src/app/admin/`: Headless Admin CMS dashboard (`/admin`) with custom sidebar, auth guards, and content management.
+- `src/app/api/revalidate/`: On-demand ISR cache invalidation endpoint.
+
+---
+
+## 🚀 Running Locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Run standalone frontend dev server
 pnpm dev
-# or
-bun dev
+
+# Or from repository root:
+pnpm dev:web
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Frontend runs on [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Environment Variables
 
-## Learn More
+Copy `.env.example` to `.env.local` if needed:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+PORT=3000
+INTERNAL_API_URL=http://localhost:4000/api/v1
+NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
+REVALIDATION_SECRET=your_revalidation_secret
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📖 Main Documentation
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See the root repository documentation for full architecture and deployment manuals:
+- [Root README](../../README.md)
+- [Architecture Guide](../../docs/ARCHITECTURE.md)
+- [CMS Guide](../../docs/CMS_GUIDE.md)
