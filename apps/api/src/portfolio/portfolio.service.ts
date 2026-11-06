@@ -107,9 +107,22 @@ export class PortfolioService {
         orderBy: [asc(schema.projects.displayOrder)],
         with: {
           caseStudy: true,
+          techStacks: {
+            with: {
+              skill: true,
+            },
+          },
         },
       });
-      if (records.length > 0) return records;
+      if (records.length > 0) {
+        return records.map((p: any) => ({
+          ...p,
+          techStack:
+            p.techStacks && p.techStacks.length > 0
+              ? p.techStacks.map((ts: any) => ts.skill?.name).filter(Boolean)
+              : [p.category || 'Engineering'],
+        }));
+      }
     } catch (err: any) {
       this.logger.warn(`Database query failed in getProjects: ${err.message}. Using fallback.`);
     }

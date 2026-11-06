@@ -41,7 +41,7 @@ export function SkillsSection({ categories }: { categories: SkillCategory[] }) {
               </div>
 
               <ul className="space-y-2.5 flex-1">
-                {cat.skills.map((skill) => (
+                {(cat.skills || []).map((skill) => (
                   <li
                     key={skill.name}
                     className="flex items-center justify-between text-sm py-1 border-b border-neutral-100 dark:border-neutral-800/60 last:border-none"

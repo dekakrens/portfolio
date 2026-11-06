@@ -91,7 +91,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
       url: 'https://dekakrens.com',
     },
     about: project.category,
-    keywords: project.techStack.join(', '),
+    keywords: (project.techStack || []).join(', '),
   };
 
   return (
@@ -134,7 +134,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
         {/* Tech Stack Pills */}
         <div className="flex flex-wrap gap-2 pt-2">
-          {project.techStack.map((tech) => (
+          {(project.techStack || []).map((tech) => (
             <span
               key={tech}
               className="px-3 py-1 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 text-xs font-medium"
@@ -213,7 +213,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 Key Features &amp; Capabilities
               </h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {project.caseStudy.keyFeatures.map((feat, idx) => (
+                {(project.caseStudy?.keyFeatures || []).map((feat, idx) => (
                   <li
                     key={idx}
                     className="flex items-start gap-3 p-3.5 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-neutral-900/40 text-sm text-neutral-700 dark:text-neutral-300"

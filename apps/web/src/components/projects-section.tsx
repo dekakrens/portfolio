@@ -82,7 +82,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
 
                 {/* Tech Stack Pills */}
                 <div className="flex flex-wrap gap-1.5 mb-6">
-                  {project.techStack.map((tech) => (
+                  {(project.techStack || []).map((tech) => (
                     <span
                       key={tech}
                       className="px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-xs font-medium"
@@ -197,7 +197,7 @@ export function ProjectsSection({ projects }: { projects: Project[] }) {
                     Key Highlights
                   </h4>
                   <ul className="space-y-2">
-                    {activeModalProject.caseStudy.keyFeatures.map((feat, idx) => (
+                    {(activeModalProject.caseStudy?.keyFeatures || []).map((feat, idx) => (
                       <li key={idx} className="flex items-start gap-2.5 text-sm text-neutral-700 dark:text-neutral-300">
                         <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                         <span>{feat}</span>
