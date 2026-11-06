@@ -32,6 +32,7 @@ export async function generateMetadata({
 
   const title = `${article.title} | Deny Kurniawan Engineering Wiki`;
   const description = article.summary || 'Technical guide and architectural article by Deny Kurniawan.';
+  const ogImageUrl = `https://dekakrens.com/api/og?title=${encodeURIComponent(article.title)}&subtitle=${encodeURIComponent((article.summary || '').slice(0, 110))}&tag=${encodeURIComponent(article.category?.name || 'Engineering Wiki')}`;
 
   return {
     title,
@@ -43,6 +44,21 @@ export async function generateMetadata({
       type: 'article',
       url: `https://wiki.dekakrens.com/${article.slug}`,
       publishedTime: article.publishedAt,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      creator: '@dekakrens',
+      images: [ogImageUrl],
     },
     alternates: {
       canonical: `https://wiki.dekakrens.com/${article.slug}`,

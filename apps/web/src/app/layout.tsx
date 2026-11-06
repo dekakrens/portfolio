@@ -53,6 +53,14 @@ export const metadata: Metadata = {
     title: 'Deny Kurniawan (@dekakrens) | React Developer & DevOps-Minded Software Engineer',
     description:
       'Explore featured projects, production experience, and engineering background of Deny Kurniawan (@dekakrens).',
+    images: [
+      {
+        url: 'https://dekakrens.com/api/og?title=Deny%20Kurniawan%20(%40dekakrens)&subtitle=React%20Developer%20%7C%20DevOps-Minded%20Software%20Engineer&tag=Engineering%20Portfolio',
+        width: 1200,
+        height: 630,
+        alt: 'Deny Kurniawan (@dekakrens) - Portfolio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -60,6 +68,9 @@ export const metadata: Metadata = {
     description:
       'Frontend-focused Software Engineer with 4+ years building production web and mobile apps with React, React Native, Next.js, and Docker.',
     creator: '@dekakrens',
+    images: [
+      'https://dekakrens.com/api/og?title=Deny%20Kurniawan%20(%40dekakrens)&subtitle=React%20Developer%20%7C%20DevOps-Minded%20Software%20Engineer&tag=Engineering%20Portfolio',
+    ],
   },
   alternates: {
     canonical: 'https://dekakrens.com',

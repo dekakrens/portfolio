@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const title = `${project.title} - Engineering Case Study | Deny Kurniawan`;
   const description = project.summary;
   const canonicalUrl = `https://dekakrens.com/projects/${project.slug}`;
+  const ogImageUrl = `https://dekakrens.com/api/og?title=${encodeURIComponent(project.title)}&subtitle=${encodeURIComponent(project.summary.slice(0, 110))}&tag=${encodeURIComponent('Featured Case Study')}`;
 
   return {
     title,
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       siteName: 'Deny Kurniawan (@dekakrens) Portfolio',
       images: [
         {
-          url: project.thumbnailUrl || '/og-image.png',
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: project.title,
@@ -53,6 +54,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       title,
       description,
       creator: '@dekakrens',
+      images: [ogImageUrl],
     },
   };
 }

@@ -24,3 +24,9 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Performance: Defer offscreen rendering until scrolled near viewport */
+.section-deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}

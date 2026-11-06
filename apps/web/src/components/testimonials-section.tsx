@@ -5,7 +5,7 @@ import { LinkedinIcon } from './icons';
 
 export function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
   return (
-    <section id="testimonials" className="py-20 border-t border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-950/50">
+    <section id="testimonials" className="py-20 border-t border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-950/50 section-deferred">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="text-xs uppercase font-bold tracking-widest text-emerald-600 dark:text-emerald-400 mb-2">
