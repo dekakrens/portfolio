@@ -38,22 +38,22 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    const revalidated: string[] = [];
+
     if (tag) {
       revalidateTag(tag, { expire: 0 });
-      return NextResponse.json({
-        revalidated: true,
-        type: 'tag',
-        tag,
-        timestamp: new Date().toISOString(),
-      });
+      revalidated.push(`tag:${tag}`);
     }
 
     if (path) {
       revalidatePath(path);
+      revalidated.push(`path:${path}`);
+    }
+
+    if (revalidated.length > 0) {
       return NextResponse.json({
         revalidated: true,
-        type: 'path',
-        path,
+        actions: revalidated,
         timestamp: new Date().toISOString(),
       });
     }

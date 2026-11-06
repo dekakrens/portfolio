@@ -238,96 +238,28 @@ export class PortfolioService {
 
   async getExperience() {
     try {
-      const records = await this.db.select().from(schema.workExperiences).orderBy(asc(schema.workExperiences.displayOrder));
-      if (records.length > 0) return records;
+      const records = await this.db
+        .select()
+        .from(schema.workExperiences)
+        .orderBy(asc(schema.workExperiences.displayOrder));
+      return records;
     } catch (err: any) {
-      this.logger.warn(`Database query failed in getExperience: ${err.message}. Using fallback.`);
+      this.logger.warn(`Database query failed in getExperience: ${err.message}.`);
+      return [];
     }
-
-    return [
-      {
-        companyName: 'Meetaza Prawira Media',
-        companyUrl: 'https://meetaza.com',
-        role: 'Front End & Mobile Application Developer',
-        location: 'Yogyakarta, Indonesia',
-        startDate: 'Oct 2021',
-        endDate: 'Present',
-        isCurrent: true,
-        description:
-          'Developing and maintaining responsive web and mobile applications, ensuring consistent updates, user-friendly UI, and stable performance in production.',
-        highlights: [
-          'Built a cross-platform Android application using React Native and Flutter, cutting company development costs by 50%.',
-          'Designed and shipped an AI-powered chat feature within a web application, focused on a clean, user-friendly experience.',
-          'Developed a GPS tracker web dashboard using Leaflet and a video-conferencing application using Agora.',
-          'Implemented and consumed RESTful APIs and WebSocket communications to power real-time features.',
-          'Contributed to deployment workflows using Docker containers and CI/CD pipelines (GitHub Actions/GitLab CI) for consistent staging-to-production releases.',
-          'Assisted with monitoring application health and troubleshooting production issues, using Sentry for error tracking to speed up incident resolution.',
-          'Delivered 4+ production web applications and shipped 1 Android and 1 iOS application from development through release.',
-        ],
-      },
-      {
-        companyName: 'Goritma Tech',
-        companyUrl: 'https://example.com',
-        role: 'Mobile Application Developer (Freelance)',
-        location: 'Remote, Indonesia',
-        startDate: 'Jul 2021',
-        endDate: 'Sep 2021',
-        isCurrent: false,
-        description:
-          'Engineered a health-focused mobile application for tracking menstrual and pregnancy health.',
-        highlights: [
-          'Developed an Android application with robust state management and integrated RESTful APIs.',
-          'Collaborated with a backend developer to integrate application data and services.',
-          'Successfully delivered a health-focused mobile application to the Google Play Store within 3 months.',
-        ],
-      },
-      {
-        companyName: 'Digital Talent Incubator',
-        companyUrl: 'https://example.com',
-        role: 'Android Developer',
-        location: 'Indonesia',
-        startDate: 'Sep 2020',
-        endDate: 'Dec 2020',
-        isCurrent: false,
-        description:
-          'Intensive engineering incubator focused on mobile application development and modern DevOps workflows.',
-        highlights: [
-          'Developed an Android application using the React Native framework.',
-          'Integrated Firebase Authentication and Firestore for backend services.',
-          'Gained foundational, hands-on experience with CI/CD pipelines for continuous delivery.',
-        ],
-      },
-    ];
   }
 
   async getTestimonials() {
     try {
-      const records = await this.db.select().from(schema.testimonials).orderBy(asc(schema.testimonials.displayOrder));
-      if (records.length > 0) return records;
+      const records = await this.db
+        .select()
+        .from(schema.testimonials)
+        .orderBy(asc(schema.testimonials.displayOrder));
+      return records;
     } catch (err: any) {
-      this.logger.warn(`Database query failed in getTestimonials: ${err.message}. Using fallback.`);
+      this.logger.warn(`Database query failed in getTestimonials: ${err.message}.`);
+      return [];
     }
-
-    return [
-      {
-        authorName: 'Alex Pratama',
-        authorTitle: 'VP of Technology',
-        company: 'OmniVentures',
-        content:
-          'Deny is one of the rare engineers who can seamlessly traverse the entire stack—from low-level C++ firmware on microcontrollers up to modern React and distributed Node.js architectures. His dedication to clean code and reliability is world-class.',
-        avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-        linkedinUrl: 'https://linkedin.com',
-      },
-      {
-        authorName: 'Sarah Jenkins',
-        authorTitle: 'Head of Product',
-        company: 'IoT Nexus',
-        content:
-          'Working with Deny was a breeze. He delivered our smart sensor monitoring portal ahead of schedule with immaculate attention to detail, comprehensive API documentation, and exceptional UX.',
-        avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80',
-        linkedinUrl: 'https://linkedin.com',
-      },
-    ];
   }
 
   async createContactInquiry(dto: CreateContactInquiryDto) {

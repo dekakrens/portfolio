@@ -239,26 +239,7 @@ export const FALLBACK_EXPERIENCE: WorkExperience[] = [
   },
 ];
 
-export const FALLBACK_TESTIMONIALS: Testimonial[] = [
-  {
-    authorName: 'Alex Pratama',
-    authorTitle: 'VP of Technology',
-    company: 'OmniVentures',
-    content:
-      'Deny is one of the rare engineers who can seamlessly traverse the entire stack—from low-level C++ firmware on microcontrollers up to modern React and distributed Node.js architectures. His dedication to clean code and reliability is world-class.',
-    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-    linkedinUrl: 'https://linkedin.com',
-  },
-  {
-    authorName: 'Sarah Jenkins',
-    authorTitle: 'Head of Product',
-    company: 'IoT Nexus',
-    content:
-      'Working with Deny was a breeze. He delivered our smart sensor monitoring portal ahead of schedule with immaculate attention to detail, comprehensive API documentation, and exceptional UX.',
-    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80',
-    linkedinUrl: 'https://linkedin.com',
-  },
-];
+export const FALLBACK_TESTIMONIALS: Testimonial[] = [];
 
 // -----------------------------------------------------------------------------
 // API Fetchers
@@ -287,5 +268,5 @@ export async function getExperience(): Promise<WorkExperience[]> {
 }
 
 export async function getTestimonials(): Promise<Testimonial[]> {
-  return fetchWithFallback<Testimonial[]>('/testimonials', FALLBACK_TESTIMONIALS);
+  return fetchWithFallback<Testimonial[]>('/testimonials', []);
 }

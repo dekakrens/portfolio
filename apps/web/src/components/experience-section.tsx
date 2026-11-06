@@ -3,6 +3,10 @@ import { WorkExperience } from '@/types/portfolio';
 import { Briefcase, Calendar, MapPin, CheckCircle2 } from 'lucide-react';
 
 export function ExperienceSection({ experiences }: { experiences: WorkExperience[] }) {
+  if (!experiences || experiences.length === 0) {
+    return null;
+  }
+
   return (
     <section id="experience" className="py-20 border-t border-neutral-200/80 dark:border-neutral-800/80 section-deferred">
       <div className="max-w-4xl mx-auto px-4 sm:px-6">

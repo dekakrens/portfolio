@@ -4,6 +4,10 @@ import { Quote } from 'lucide-react';
 import { LinkedinIcon } from './icons';
 
 export function TestimonialsSection({ testimonials }: { testimonials: Testimonial[] }) {
+  if (!testimonials || testimonials.length === 0) {
+    return null;
+  }
+
   return (
     <section id="testimonials" className="py-20 border-t border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-950/50 section-deferred">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
