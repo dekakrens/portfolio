@@ -43,6 +43,80 @@ function HighlightIcon({ name, className }: { name?: string; className?: string 
   }
 }
 
+function renderHeadline(headline?: string) {
+  const text = (headline || 'React Developer & DevOps-Minded Engineer').replace(/&amp;/g, '&').trim();
+
+  // If explicit separator " & " is used
+  if (text.includes(' & ')) {
+    const idx = text.indexOf(' & ');
+    const firstPart = text.slice(0, idx);
+    const secondPart = text.slice(idx + 3);
+    return (
+      <>
+        {firstPart} &amp;{' '}
+        <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
+          {secondPart}
+        </span>
+      </>
+    );
+  }
+
+  // If explicit separator " | " is used
+  if (text.includes(' | ')) {
+    const idx = text.indexOf(' | ');
+    const firstPart = text.slice(0, idx);
+    const secondPart = text.slice(idx + 3);
+    return (
+      <>
+        {firstPart}{' '}
+        <span className="text-neutral-400 dark:text-neutral-500 font-normal">|</span>{' '}
+        <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
+          {secondPart}
+        </span>
+      </>
+    );
+  }
+
+  // If explicit separator " // " is used
+  if (text.includes(' // ')) {
+    const idx = text.indexOf(' // ');
+    const firstPart = text.slice(0, idx);
+    const secondPart = text.slice(idx + 4);
+    return (
+      <>
+        {firstPart}{' '}
+        <span className="text-neutral-400 dark:text-neutral-500 font-normal">{'//'}</span>{' '}
+        <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
+          {secondPart}
+        </span>
+      </>
+    );
+  }
+
+  // Multi-word headlines: split near the middle so the second half is highlighted with gradient
+  const words = text.split(/\s+/);
+  if (words.length > 2) {
+    const mid = Math.ceil(words.length / 2);
+    const firstPart = words.slice(0, mid).join(' ');
+    const secondPart = words.slice(mid).join(' ');
+    return (
+      <>
+        {firstPart}{' '}
+        <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
+          {secondPart}
+        </span>
+      </>
+    );
+  }
+
+  // Single or short phrase
+  return (
+    <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
+      {text}
+    </span>
+  );
+}
+
 export function HeroSection({ profile }: { profile: Profile }) {
   return (
     <section className="relative pt-12 pb-20 md:pt-20 md:pb-28 overflow-hidden">
@@ -58,10 +132,7 @@ export function HeroSection({ profile }: { profile: Profile }) {
 
         {/* Title & Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-neutral-900 dark:text-white leading-[1.1] mb-6">
-          React Developer &amp;{' '}
-          <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
-            DevOps-Minded Engineer
-          </span>
+          {renderHeadline(profile.headline)}
         </h1>
 
         {/* Elevator pitch */}
