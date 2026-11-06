@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
       request.headers.get('x-revalidation-secret');
 
     const expectedSecret =
-      process.env.REVALIDATION_SECRET || 'dekakrens_super_secret_revalidate_2026';
+      process.env.REVALIDATION_SECRET || 'dekakrens-super-secret-revalidate-token-2026';
 
     if (secret !== expectedSecret) {
       return NextResponse.json(

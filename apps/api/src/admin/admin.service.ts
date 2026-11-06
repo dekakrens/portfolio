@@ -9,7 +9,7 @@ export class AdminService {
   private readonly revalidateUrl =
     process.env.REVALIDATE_URL || 'http://portfolio_web:3000/api/revalidate';
   private readonly revalidateSecret =
-    process.env.REVALIDATION_SECRET || 'dekakrens_super_secret_revalidate_2026';
+    process.env.REVALIDATION_SECRET || 'dekakrens-super-secret-revalidate-token-2026';
 
   constructor(@Inject(DRIZZLE_DB) private readonly db: AppDatabase) {}
 
