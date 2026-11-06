@@ -46,22 +46,7 @@ function HighlightIcon({ name, className }: { name?: string; className?: string 
 function renderHeadline(headline?: string) {
   const text = (headline || 'React Developer & DevOps-Minded Engineer').replace(/&amp;/g, '&').trim();
 
-  // If explicit separator " & " is used
-  if (text.includes(' & ')) {
-    const idx = text.indexOf(' & ');
-    const firstPart = text.slice(0, idx);
-    const secondPart = text.slice(idx + 3);
-    return (
-      <>
-        {firstPart} &amp;{' '}
-        <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
-          {secondPart}
-        </span>
-      </>
-    );
-  }
-
-  // If explicit separator " | " is used
+  // 1. If explicit separator " | " is used (e.g. "Role 1 & Mobile | Role 2")
   if (text.includes(' | ')) {
     const idx = text.indexOf(' | ');
     const firstPart = text.slice(0, idx);
@@ -77,7 +62,7 @@ function renderHeadline(headline?: string) {
     );
   }
 
-  // If explicit separator " // " is used
+  // 2. If explicit separator " // " is used
   if (text.includes(' // ')) {
     const idx = text.indexOf(' // ');
     const firstPart = text.slice(0, idx);
@@ -86,6 +71,21 @@ function renderHeadline(headline?: string) {
       <>
         {firstPart}{' '}
         <span className="text-neutral-400 dark:text-neutral-500 font-normal">{'//'}</span>{' '}
+        <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
+          {secondPart}
+        </span>
+      </>
+    );
+  }
+
+  // 3. If explicit separator " & " is used
+  if (text.includes(' & ')) {
+    const idx = text.indexOf(' & ');
+    const firstPart = text.slice(0, idx);
+    const secondPart = text.slice(idx + 3);
+    return (
+      <>
+        {firstPart} &amp;{' '}
         <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-indigo-600 dark:from-emerald-400 dark:via-teal-300 dark:to-indigo-400 bg-clip-text text-transparent">
           {secondPart}
         </span>
