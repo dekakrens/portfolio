@@ -32,6 +32,11 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY}
       RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-Deny Kurniawan <onboarding@resend.dev>}
       RESEND_TO_EMAIL: ${RESEND_TO_EMAIL:-dekakrens@gmail.com}
+      REVALIDATION_SECRET: ${REVALIDATION_SECRET:-dekakrens-super-secret-revalidate-token-2026}
+      JWT_SECRET: ${JWT_SECRET:-dekakrens-cms-session-secret-salt-2026}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-dekakrens@gmail.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-dekakrens2026!}
+      ADMIN_NAME: ${ADMIN_NAME:-Deny Kurniawan}
     depends_on:
       portfolio_postgres:
         condition: service_healthy
@@ -51,6 +56,7 @@ services:
       PORT: 3000
       INTERNAL_API_URL: http://portfolio_api:4000/api/v1
       NEXT_PUBLIC_API_URL: https://api.dekakrens.com/api/v1
+      REVALIDATION_SECRET: ${REVALIDATION_SECRET:-dekakrens-super-secret-revalidate-token-2026}
     depends_on:
       - portfolio_api
     networks:

@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
   OnModuleInit,
 } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { scryptSync, randomBytes, timingSafeEqual, createHmac } from 'node:crypto';
 import { DRIZZLE_DB, type AppDatabase } from '../database/database.module.js';
 import * as schema from '../database/schema.js';
@@ -138,6 +138,19 @@ export class AuthService implements OnModuleInit {
 
   async ensureDefaultAdmin() {
     try {
+      // Guarantee admin_users table exists
+      await this.db.execute(sql`
+        CREATE TABLE IF NOT EXISTS admin_users (
+          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+          email VARCHAR(255) NOT NULL UNIQUE,
+          password_hash TEXT NOT NULL,
+          name VARCHAR(255) NOT NULL,
+          role VARCHAR(50) NOT NULL DEFAULT 'admin',
+          created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+          updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+        );
+      `);
+
       const defaultEmail = 'dekakrens@gmail.com';
       const defaultPassword = process.env.ADMIN_PASSWORD || 'dekakrens2026!';
 
