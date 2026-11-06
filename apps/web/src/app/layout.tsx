@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Navbar } from '@/components/navbar';
-import { Footer } from '@/components/footer';
 import { getProfile } from '@/lib/api';
 
 const geistSans = Geist({
@@ -122,9 +120,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 antialiased font-sans flex flex-col`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar availabilityBadge={profile.availabilityBadge} />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          {children}
         </ThemeProvider>
       </body>
     </html>

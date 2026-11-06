@@ -139,7 +139,7 @@ export function ArticleEditor({ articleId }: ArticleEditorProps) {
               {isEdit ? 'Edit Article' : 'Write New Article'}
             </h1>
             <p className="text-xs text-neutral-500">
-              {isEdit ? `Updating /${form.slug}` : 'Creates a new entry on wiki.dekakrens.com'}
+              {isEdit ? `Updating /wiki/${form.slug}` : 'Creates a new entry on dekakrens.com/wiki'}
             </p>
           </div>
         </div>

@@ -42,7 +42,7 @@ export async function generateMetadata({
       title,
       description,
       type: 'article',
-      url: `https://wiki.dekakrens.com/${article.slug}`,
+      url: `https://dekakrens.com/wiki/${article.slug}`,
       publishedTime: article.publishedAt,
       images: [
         {
@@ -61,7 +61,7 @@ export async function generateMetadata({
       images: [ogImageUrl],
     },
     alternates: {
-      canonical: `https://wiki.dekakrens.com/${article.slug}`,
+      canonical: `https://dekakrens.com/wiki/${article.slug}`,
     },
   };
 }
@@ -103,7 +103,7 @@ export default async function WikiArticlePage({
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://wiki.dekakrens.com/${article.slug}`,
+      '@id': `https://dekakrens.com/wiki/${article.slug}`,
     },
   };
 
@@ -195,7 +195,7 @@ export default async function WikiArticlePage({
             <a
               href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                 article.title,
-              )}&url=${encodeURIComponent(`https://wiki.dekakrens.com/${article.slug}`)}`}
+              )}&url=${encodeURIComponent(`https://dekakrens.com/wiki/${article.slug}`)}`}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors"

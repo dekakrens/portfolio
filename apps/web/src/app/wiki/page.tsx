@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     title: 'Engineering Wiki & Digital Garden | Deny Kurniawan (@dekakrens)',
     description:
       'Living documentation, architectural write-ups, IoT cheatsheets, and production DevOps lessons learned by Deny Kurniawan (@dekakrens).',
-    url: 'https://wiki.dekakrens.com',
+    url: 'https://dekakrens.com/wiki',
   },
   alternates: {
-    canonical: 'https://wiki.dekakrens.com',
+    canonical: 'https://dekakrens.com/wiki',
   },
 };
 

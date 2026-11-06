@@ -67,7 +67,7 @@ export default function AdminWikiListPage() {
             Digital Garden &amp; Wiki Articles
           </h1>
           <p className="text-sm text-neutral-500 dark:text-neutral-400 mt-1">
-            Manage your technical documentation and write-ups published on wiki.dekakrens.com
+            Manage your technical documentation and write-ups published on dekakrens.com/wiki
           </p>
         </div>
 
@@ -149,7 +149,7 @@ export default function AdminWikiListPage() {
                 {/* Actions */}
                 <div className="flex items-center gap-2 shrink-0">
                   <a
-                    href={`https://wiki.dekakrens.com/${article.slug}`}
+                    href={`https://dekakrens.com/wiki/${article.slug}`}
                     target="_blank"
                     rel="noreferrer"
                     className="p-2 rounded-lg border border-neutral-200 dark:border-neutral-800 text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors"

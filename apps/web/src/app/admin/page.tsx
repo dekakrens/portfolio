@@ -112,7 +112,7 @@ export default function AdminDashboardPage() {
             Welcome back, Deny!
           </h1>
           <p className="text-sm text-neutral-300 mt-1 max-w-xl">
-            Manage your articles on <code className="text-emerald-400">wiki.dekakrens.com</code>, update project case studies, and respond to incoming inquiries.
+            Manage your articles on <code className="text-emerald-400">dekakrens.com/wiki</code>, update project case studies, and respond to incoming inquiries.
           </p>
         </div>
 

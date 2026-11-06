@@ -4,24 +4,19 @@ export function middleware(req: NextRequest) {
   const host = req.headers.get('host') || '';
   const { pathname } = req.nextUrl;
 
-  // Check if request is hitting the wiki subdomain
+  // Check if request is hitting the legacy wiki subdomain
   const isWikiSubdomain = host.startsWith('wiki.');
 
   if (isWikiSubdomain) {
-    // If accessing the root of wiki subdomain, rewrite to /wiki
-    if (pathname === '/') {
-      return NextResponse.rewrite(new URL('/wiki', req.url));
-    }
+    // Permanently redirect all wiki subdomain traffic to dekakrens.com/wiki
+    const cleanPath =
+      pathname === '/'
+        ? '/wiki'
+        : pathname.startsWith('/wiki')
+          ? pathname
+          : `/wiki${pathname}`;
 
-    // If accessing an article path directly on wiki subdomain, rewrite to /wiki/:path
-    if (
-      !pathname.startsWith('/wiki') &&
-      !pathname.startsWith('/_next') &&
-      !pathname.startsWith('/api') &&
-      !pathname.includes('.')
-    ) {
-      return NextResponse.rewrite(new URL(`/wiki${pathname}`, req.url));
-    }
+    return NextResponse.redirect(`https://dekakrens.com${cleanPath}`, 301);
   }
 
   return NextResponse.next();
