@@ -15,9 +15,24 @@ export class PortfolioService {
   ) {}
 
   async getProfile() {
+    const defaultHighlights = [
+      { icon: 'Layers', title: '6+ Years', subtitle: 'Full-Stack Experience' },
+      { icon: 'Cpu', title: 'Edge & IoT', subtitle: 'ESP32 / OpenCV / LoRa' },
+      { icon: 'Terminal', title: 'Enterprise', subtitle: 'NestJS & Drizzle ORM' },
+      { icon: 'Sparkles', title: '99.2%', subtitle: 'Vision OCR Accuracy' },
+    ];
+
     try {
       const records = await this.db.select().from(schema.profiles).limit(1);
-      if (records.length > 0) return records[0];
+      if (records.length > 0) {
+        return {
+          ...records[0],
+          highlights:
+            records[0].highlights && records[0].highlights.length > 0
+              ? records[0].highlights
+              : defaultHighlights,
+        };
+      }
     } catch (err: any) {
       this.logger.warn(`Database query failed in getProfile: ${err.message}. Using fallback.`);
     }
@@ -38,6 +53,7 @@ export class PortfolioService {
         email: '0812deny@gmail.com',
         twitter: 'https://twitter.com/dekakrens',
       },
+      highlights: defaultHighlights,
     };
   }
 

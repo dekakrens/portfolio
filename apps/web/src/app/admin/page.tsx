@@ -12,6 +12,8 @@ import {
   ExternalLink,
   Clock,
   CheckCircle2,
+  Briefcase,
+  MessageSquareQuote,
 } from 'lucide-react';
 import { adminGetStats, adminGetInquiries } from '@/lib/admin-api';
 
@@ -21,6 +23,8 @@ export default function AdminDashboardPage() {
     totalProjects: 0,
     totalInquiries: 0,
     totalSkills: 0,
+    totalExperiences: 0,
+    totalTestimonials: 0,
   });
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,7 +32,14 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     Promise.all([adminGetStats(), adminGetInquiries()])
       .then(([statsData, inquiriesData]) => {
-        setStats(statsData);
+        setStats({
+          totalArticles: statsData.totalArticles,
+          totalProjects: statsData.totalProjects,
+          totalInquiries: statsData.totalInquiries,
+          totalSkills: statsData.totalSkills,
+          totalExperiences: statsData.totalExperiences || 0,
+          totalTestimonials: statsData.totalTestimonials || 0,
+        });
         setInquiries(inquiriesData.slice(0, 5));
         setLoading(false);
       })
@@ -56,20 +67,36 @@ export default function AdminDashboardPage() {
       href: '/admin/projects',
     },
     {
+      label: 'Skills & Stack',
+      value: stats.totalSkills,
+      icon: Cpu,
+      color: 'text-indigo-500',
+      bgColor: 'bg-indigo-500/10',
+      href: '/admin/skills',
+    },
+    {
+      label: 'Career Journey',
+      value: stats.totalExperiences,
+      icon: Briefcase,
+      color: 'text-teal-500',
+      bgColor: 'bg-teal-500/10',
+      href: '/admin/experience',
+    },
+    {
+      label: 'Client Feedbacks',
+      value: stats.totalTestimonials,
+      icon: MessageSquareQuote,
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-500/10',
+      href: '/admin/testimonials',
+    },
+    {
       label: 'Contact Inquiries',
       value: stats.totalInquiries,
       icon: Mail,
       color: 'text-amber-500',
       bgColor: 'bg-amber-500/10',
       href: '/admin/inquiries',
-    },
-    {
-      label: 'Skills Populated',
-      value: stats.totalSkills,
-      icon: Cpu,
-      color: 'text-indigo-500',
-      bgColor: 'bg-indigo-500/10',
-      href: '/#skills',
     },
   ];
 
@@ -108,7 +135,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {statCards.map((c) => {
           const Icon = c.icon;
           return (

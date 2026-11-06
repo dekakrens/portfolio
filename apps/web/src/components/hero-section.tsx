@@ -1,7 +1,47 @@
 import React from 'react';
 import { Profile } from '@/types/portfolio';
-import { Mail, ArrowRight, Download, Cpu, Layers, Terminal, Sparkles } from 'lucide-react';
+import {
+  Mail,
+  ArrowRight,
+  Download,
+  Cpu,
+  Layers,
+  Terminal,
+  Sparkles,
+  Code,
+  Award,
+  Zap,
+  Globe,
+  Smartphone,
+  ShieldCheck,
+} from 'lucide-react';
 import { GithubIcon, LinkedinIcon, TwitterIcon } from './icons';
+
+function HighlightIcon({ name, className }: { name?: string; className?: string }) {
+  switch (name?.toLowerCase()) {
+    case 'cpu':
+      return <Cpu className={className} />;
+    case 'terminal':
+      return <Terminal className={className} />;
+    case 'sparkles':
+      return <Sparkles className={className} />;
+    case 'code':
+      return <Code className={className} />;
+    case 'award':
+      return <Award className={className} />;
+    case 'zap':
+      return <Zap className={className} />;
+    case 'globe':
+      return <Globe className={className} />;
+    case 'smartphone':
+      return <Smartphone className={className} />;
+    case 'shieldcheck':
+      return <ShieldCheck className={className} />;
+    case 'layers':
+    default:
+      return <Layers className={className} />;
+  }
+}
 
 export function HeroSection({ profile }: { profile: Profile }) {
   return (
@@ -106,28 +146,27 @@ export function HeroSection({ profile }: { profile: Profile }) {
         </div>
 
         {/* Quick Highlights Grid */}
-        <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
-          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
-            <Layers className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mb-2" />
-            <div className="text-xl font-bold text-neutral-900 dark:text-white">6+ Years</div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400">Full-Stack Experience</div>
+        {profile.highlights && profile.highlights.length > 0 && (
+          <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
+            {profile.highlights.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40"
+              >
+                <HighlightIcon
+                  name={item.icon}
+                  className="w-5 h-5 text-emerald-600 dark:text-emerald-400 mb-2"
+                />
+                <div className="text-xl font-bold text-neutral-900 dark:text-white">
+                  {item.title}
+                </div>
+                <div className="text-xs text-neutral-500 dark:text-neutral-400">
+                  {item.subtitle}
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
-            <Cpu className="w-5 h-5 text-indigo-600 dark:text-indigo-400 mb-2" />
-            <div className="text-xl font-bold text-neutral-900 dark:text-white">Edge &amp; IoT</div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400">ESP32 / OpenCV / LoRa</div>
-          </div>
-          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
-            <Terminal className="w-5 h-5 text-teal-600 dark:text-teal-400 mb-2" />
-            <div className="text-xl font-bold text-neutral-900 dark:text-white">Enterprise</div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400">NestJS &amp; Drizzle ORM</div>
-          </div>
-          <div className="p-4 rounded-xl border border-neutral-200/80 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/40">
-            <Sparkles className="w-5 h-5 text-amber-500 dark:text-amber-400 mb-2" />
-            <div className="text-xl font-bold text-neutral-900 dark:text-white">99.2%</div>
-            <div className="text-xs text-neutral-500 dark:text-neutral-400">Vision OCR Accuracy</div>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

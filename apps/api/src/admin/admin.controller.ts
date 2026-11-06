@@ -119,4 +119,97 @@ export class AdminController {
   updateProfile(@Body() body: any) {
     return this.adminService.updateProfile(body);
   }
+
+  // Skills & Categories
+  @Get('skills')
+  @ApiOperation({ summary: 'List all skills grouped by category' })
+  getAllSkills() {
+    return this.adminService.getAllSkillCategories();
+  }
+
+  @Post('skills/categories')
+  @ApiOperation({ summary: 'Create a skill category' })
+  createSkillCategory(@Body() body: any) {
+    return this.adminService.createSkillCategory(body);
+  }
+
+  @Put('skills/categories/:id')
+  @ApiOperation({ summary: 'Update a skill category' })
+  updateSkillCategory(@Param('id') id: string, @Body() body: any) {
+    return this.adminService.updateSkillCategory(id, body);
+  }
+
+  @Delete('skills/categories/:id')
+  @ApiOperation({ summary: 'Delete a skill category' })
+  deleteSkillCategory(@Param('id') id: string) {
+    return this.adminService.deleteSkillCategory(id);
+  }
+
+  @Post('skills')
+  @ApiOperation({ summary: 'Create a skill' })
+  createSkill(@Body() body: any) {
+    return this.adminService.createSkill(body);
+  }
+
+  @Put('skills/:id')
+  @ApiOperation({ summary: 'Update a skill' })
+  updateSkill(@Param('id') id: string, @Body() body: any) {
+    return this.adminService.updateSkill(id, body);
+  }
+
+  @Delete('skills/:id')
+  @ApiOperation({ summary: 'Delete a skill' })
+  deleteSkill(@Param('id') id: string) {
+    return this.adminService.deleteSkill(id);
+  }
+
+  // Experience (Career Journey)
+  @Get('experience')
+  @ApiOperation({ summary: 'List all work experiences' })
+  getAllExperiences() {
+    return this.adminService.getAllExperiences();
+  }
+
+  @Post('experience')
+  @ApiOperation({ summary: 'Create a work experience' })
+  createExperience(@Body() body: any) {
+    return this.adminService.createExperience(body);
+  }
+
+  @Put('experience/:id')
+  @ApiOperation({ summary: 'Update a work experience' })
+  updateExperience(@Param('id') id: string, @Body() body: any) {
+    return this.adminService.updateExperience(id, body);
+  }
+
+  @Delete('experience/:id')
+  @ApiOperation({ summary: 'Delete a work experience' })
+  deleteExperience(@Param('id') id: string) {
+    return this.adminService.deleteExperience(id);
+  }
+
+  // Testimonials (Feedbacks)
+  @Get('testimonials')
+  @ApiOperation({ summary: 'List all testimonials / feedbacks' })
+  getAllTestimonials() {
+    return this.adminService.getAllTestimonials();
+  }
+
+  @Post('testimonials')
+  @ApiOperation({ summary: 'Create a testimonial' })
+  createTestimonial(@Body() body: any) {
+    return this.adminService.createTestimonial(body);
+  }
+
+  @Put('testimonials/:id')
+  @ApiOperation({ summary: 'Update a testimonial' })
+  updateTestimonial(@Param('id') id: string, @Body() body: any) {
+    return this.adminService.updateTestimonial(id, body);
+  }
+
+  @Delete('testimonials/:id')
+  @ApiOperation({ summary: 'Delete a testimonial' })
+  deleteTestimonial(@Param('id') id: string) {
+    return this.adminService.deleteTestimonial(id);
+  }
 }

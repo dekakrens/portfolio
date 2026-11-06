@@ -13,6 +13,9 @@ import {
   ExternalLink,
   ShieldAlert,
   Loader2,
+  Cpu,
+  Briefcase,
+  MessageSquareQuote,
 } from 'lucide-react';
 import { getAuthToken, removeAuthToken, adminGetMe } from '@/lib/admin-api';
 
@@ -70,8 +73,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { label: 'Overview', href: '/admin', icon: LayoutDashboard },
     { label: 'Wiki Articles', href: '/admin/wiki', icon: BookOpen },
     { label: 'Projects', href: '/admin/projects', icon: FolderKanban },
+    { label: 'Skills & Stack', href: '/admin/skills', icon: Cpu },
+    { label: 'Career Journey', href: '/admin/experience', icon: Briefcase },
+    { label: 'Feedbacks', href: '/admin/testimonials', icon: MessageSquareQuote },
     { label: 'Inquiries', href: '/admin/inquiries', icon: Mail },
-    { label: 'Profile', href: '/admin/profile', icon: User },
+    { label: 'Profile & Cards', href: '/admin/profile', icon: User },
   ];
 
   const handleLogout = () => {

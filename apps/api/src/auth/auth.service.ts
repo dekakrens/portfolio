@@ -149,6 +149,12 @@ export class AuthService implements OnModuleInit {
           created_at TIMESTAMP NOT NULL DEFAULT NOW(),
           updated_at TIMESTAMP NOT NULL DEFAULT NOW()
         );
+        ALTER TABLE profiles ADD COLUMN IF NOT EXISTS highlights JSONB DEFAULT '[
+          {"icon":"Layers","title":"6+ Years","subtitle":"Full-Stack Experience"},
+          {"icon":"Cpu","title":"Edge & IoT","subtitle":"ESP32 / OpenCV / LoRa"},
+          {"icon":"Terminal","title":"Enterprise","subtitle":"NestJS & Drizzle ORM"},
+          {"icon":"Sparkles","title":"99.2%","subtitle":"Vision OCR Accuracy"}
+        ]'::jsonb;
       `);
 
       const defaultEmail = 'dekakrens@gmail.com';

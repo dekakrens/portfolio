@@ -32,6 +32,12 @@ export default function AdminProfilePage() {
       email: '',
       twitter: '',
     },
+    highlights: [
+      { icon: 'Layers', title: '6+ Years', subtitle: 'Full-Stack Experience' },
+      { icon: 'Cpu', title: 'Edge & IoT', subtitle: 'ESP32 / OpenCV / LoRa' },
+      { icon: 'Terminal', title: 'Enterprise', subtitle: 'NestJS & Drizzle ORM' },
+      { icon: 'Sparkles', title: '99.2%', subtitle: 'Vision OCR Accuracy' },
+    ],
   });
 
   useEffect(() => {
@@ -51,6 +57,15 @@ export default function AdminProfilePage() {
               email: data.socialLinks?.email || '',
               twitter: data.socialLinks?.twitter || '',
             },
+            highlights:
+              data.highlights && data.highlights.length > 0
+                ? data.highlights
+                : [
+                    { icon: 'Layers', title: '6+ Years', subtitle: 'Full-Stack Experience' },
+                    { icon: 'Cpu', title: 'Edge & IoT', subtitle: 'ESP32 / OpenCV / LoRa' },
+                    { icon: 'Terminal', title: 'Enterprise', subtitle: 'NestJS & Drizzle ORM' },
+                    { icon: 'Sparkles', title: '99.2%', subtitle: 'Vision OCR Accuracy' },
+                  ],
           });
         }
       })
@@ -74,6 +89,14 @@ export default function AdminProfilePage() {
         [network]: value,
       },
     }));
+  };
+
+  const handleHighlightChange = (index: number, field: string, value: string) => {
+    setFormData((prev) => {
+      const updated = [...(prev.highlights || [])];
+      updated[index] = { ...updated[index], [field]: value };
+      return { ...prev, highlights: updated };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -304,6 +327,79 @@ export default function AdminProfilePage() {
                 className="w-full px-3.5 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Hero Highlight Cards */}
+        <div className="p-6 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm space-y-4">
+          <div className="border-b border-neutral-100 dark:border-neutral-800 pb-3 flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-emerald-500" />
+                Hero Highlight Cards (Below Social Links)
+              </h2>
+              <p className="text-xs text-neutral-500 mt-0.5">
+                The 4 metric/highlight cards shown directly beneath your social links on the homepage.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {(formData.highlights || []).map((hl, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-800/40 space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-neutral-400">Card #{idx + 1}</span>
+                  <div className="flex items-center gap-2">
+                    <label className="text-[11px] text-neutral-400">Icon:</label>
+                    <select
+                      value={hl.icon || 'Layers'}
+                      onChange={(e) => handleHighlightChange(idx, 'icon', e.target.value)}
+                      className="px-2 py-1 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-xs focus:outline-none"
+                    >
+                      <option value="Layers">Layers</option>
+                      <option value="Cpu">Cpu</option>
+                      <option value="Terminal">Terminal</option>
+                      <option value="Sparkles">Sparkles</option>
+                      <option value="Code">Code</option>
+                      <option value="Award">Award</option>
+                      <option value="Zap">Zap</option>
+                      <option value="Globe">Globe</option>
+                      <option value="Smartphone">Smartphone</option>
+                      <option value="ShieldCheck">ShieldCheck</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-neutral-600 dark:text-neutral-400 mb-1">
+                    Value / Heading
+                  </label>
+                  <input
+                    type="text"
+                    value={hl.title}
+                    onChange={(e) => handleHighlightChange(idx, 'title', e.target.value)}
+                    placeholder="e.g. 6+ Years"
+                    className="w-full px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-medium text-neutral-600 dark:text-neutral-400 mb-1">
+                    Subtitle / Description
+                  </label>
+                  <input
+                    type="text"
+                    value={hl.subtitle}
+                    onChange={(e) => handleHighlightChange(idx, 'subtitle', e.target.value)}
+                    placeholder="e.g. Full-Stack Experience"
+                    className="w-full px-3 py-1.5 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

@@ -33,11 +33,13 @@ export class AdminService {
   // Dashboard Overview
   // ---------------------------------------------------------------------------
   async getDashboardStats() {
-    const [articles, projects, inquiries, skills] = await Promise.all([
+    const [articles, projects, inquiries, skills, experiences, testimonials] = await Promise.all([
       this.db.select({ id: schema.wikiArticles.id }).from(schema.wikiArticles),
       this.db.select({ id: schema.projects.id }).from(schema.projects),
       this.db.select({ id: schema.contactInquiries.id }).from(schema.contactInquiries),
       this.db.select({ id: schema.skills.id }).from(schema.skills),
+      this.db.select({ id: schema.workExperiences.id }).from(schema.workExperiences),
+      this.db.select({ id: schema.testimonials.id }).from(schema.testimonials),
     ]);
 
     return {
@@ -45,6 +47,8 @@ export class AdminService {
       totalProjects: projects.length,
       totalInquiries: inquiries.length,
       totalSkills: skills.length,
+      totalExperiences: experiences.length,
+      totalTestimonials: testimonials.length,
     };
   }
 
@@ -367,6 +371,7 @@ export class AdminService {
     availabilityBadge?: string;
     resumeAssetUrl?: string;
     socialLinks?: any;
+    highlights?: any;
   }) {
     const [profile] = await this.db.select().from(schema.profiles).limit(1);
     if (!profile) throw new NotFoundException('Profile record not found');
@@ -382,5 +387,246 @@ export class AdminService {
 
     await this.triggerRevalidation('/', 'profile');
     return updated;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Skills & Competencies
+  // ---------------------------------------------------------------------------
+  async getAllSkillCategories() {
+    return this.db.query.skillCategories.findMany({
+      orderBy: [asc(schema.skillCategories.displayOrder)],
+      with: {
+        skills: {
+          orderBy: [asc(schema.skills.displayOrder)],
+        },
+      },
+    });
+  }
+
+  async createSkillCategory(data: { name: string; displayOrder?: number }) {
+    const [record] = await this.db
+      .insert(schema.skillCategories)
+      .values({
+        name: data.name,
+        displayOrder: data.displayOrder ?? 0,
+      })
+      .returning();
+    await this.triggerRevalidation('/', 'skills');
+    return record;
+  }
+
+  async updateSkillCategory(id: string, data: { name?: string; displayOrder?: number }) {
+    const [record] = await this.db
+      .update(schema.skillCategories)
+      .set(data)
+      .where(eq(schema.skillCategories.id, id))
+      .returning();
+    if (!record) throw new NotFoundException(`Category '${id}' not found`);
+    await this.triggerRevalidation('/', 'skills');
+    return record;
+  }
+
+  async deleteSkillCategory(id: string) {
+    const [deleted] = await this.db
+      .delete(schema.skillCategories)
+      .where(eq(schema.skillCategories.id, id))
+      .returning();
+    if (!deleted) throw new NotFoundException(`Category '${id}' not found`);
+    await this.triggerRevalidation('/', 'skills');
+    return { success: true, id };
+  }
+
+  async createSkill(data: {
+    categoryId: string;
+    name: string;
+    iconSlug?: string;
+    isFeatured?: boolean;
+    displayOrder?: number;
+  }) {
+    const [record] = await this.db
+      .insert(schema.skills)
+      .values({
+        categoryId: data.categoryId,
+        name: data.name,
+        iconSlug: data.iconSlug,
+        isFeatured: data.isFeatured ?? true,
+        displayOrder: data.displayOrder ?? 0,
+      })
+      .returning();
+    await this.triggerRevalidation('/', 'skills');
+    return record;
+  }
+
+  async updateSkill(
+    id: string,
+    data: {
+      categoryId?: string;
+      name?: string;
+      iconSlug?: string;
+      isFeatured?: boolean;
+      displayOrder?: number;
+    },
+  ) {
+    const [record] = await this.db
+      .update(schema.skills)
+      .set(data)
+      .where(eq(schema.skills.id, id))
+      .returning();
+    if (!record) throw new NotFoundException(`Skill '${id}' not found`);
+    await this.triggerRevalidation('/', 'skills');
+    return record;
+  }
+
+  async deleteSkill(id: string) {
+    const [deleted] = await this.db
+      .delete(schema.skills)
+      .where(eq(schema.skills.id, id))
+      .returning();
+    if (!deleted) throw new NotFoundException(`Skill '${id}' not found`);
+    await this.triggerRevalidation('/', 'skills');
+    return { success: true, id };
+  }
+
+  // ---------------------------------------------------------------------------
+  // Work Experiences (Career Journey)
+  // ---------------------------------------------------------------------------
+  async getAllExperiences() {
+    return this.db
+      .select()
+      .from(schema.workExperiences)
+      .orderBy(asc(schema.workExperiences.displayOrder));
+  }
+
+  async createExperience(data: {
+    companyName: string;
+    companyUrl?: string;
+    role: string;
+    location: string;
+    startDate: string;
+    endDate?: string;
+    isCurrent?: boolean;
+    description: string;
+    highlights?: string[];
+    displayOrder?: number;
+  }) {
+    const [record] = await this.db
+      .insert(schema.workExperiences)
+      .values({
+        companyName: data.companyName,
+        companyUrl: data.companyUrl,
+        role: data.role,
+        location: data.location,
+        startDate: data.startDate,
+        endDate: data.endDate ?? 'Present',
+        isCurrent: data.isCurrent ?? false,
+        description: data.description,
+        highlights: data.highlights ?? [],
+        displayOrder: data.displayOrder ?? 0,
+      })
+      .returning();
+    await this.triggerRevalidation('/', 'experience');
+    return record;
+  }
+
+  async updateExperience(
+    id: string,
+    data: {
+      companyName?: string;
+      companyUrl?: string;
+      role?: string;
+      location?: string;
+      startDate?: string;
+      endDate?: string;
+      isCurrent?: boolean;
+      description?: string;
+      highlights?: string[];
+      displayOrder?: number;
+    },
+  ) {
+    const [record] = await this.db
+      .update(schema.workExperiences)
+      .set(data)
+      .where(eq(schema.workExperiences.id, id))
+      .returning();
+    if (!record) throw new NotFoundException(`Experience '${id}' not found`);
+    await this.triggerRevalidation('/', 'experience');
+    return record;
+  }
+
+  async deleteExperience(id: string) {
+    const [deleted] = await this.db
+      .delete(schema.workExperiences)
+      .where(eq(schema.workExperiences.id, id))
+      .returning();
+    if (!deleted) throw new NotFoundException(`Experience '${id}' not found`);
+    await this.triggerRevalidation('/', 'experience');
+    return { success: true, id };
+  }
+
+  // ---------------------------------------------------------------------------
+  // Feedbacks / Testimonials
+  // ---------------------------------------------------------------------------
+  async getAllTestimonials() {
+    return this.db
+      .select()
+      .from(schema.testimonials)
+      .orderBy(asc(schema.testimonials.displayOrder));
+  }
+
+  async createTestimonial(data: {
+    authorName: string;
+    authorTitle: string;
+    company?: string;
+    content: string;
+    avatarUrl?: string;
+    linkedinUrl?: string;
+    displayOrder?: number;
+  }) {
+    const [record] = await this.db
+      .insert(schema.testimonials)
+      .values({
+        authorName: data.authorName,
+        authorTitle: data.authorTitle,
+        company: data.company,
+        content: data.content,
+        avatarUrl: data.avatarUrl,
+        linkedinUrl: data.linkedinUrl,
+        displayOrder: data.displayOrder ?? 0,
+      })
+      .returning();
+    await this.triggerRevalidation('/', 'testimonials');
+    return record;
+  }
+
+  async updateTestimonial(
+    id: string,
+    data: {
+      authorName?: string;
+      authorTitle?: string;
+      company?: string;
+      content?: string;
+      avatarUrl?: string;
+      linkedinUrl?: string;
+      displayOrder?: number;
+    },
+  ) {
+    const [record] = await this.db
+      .update(schema.testimonials)
+      .set(data)
+      .where(eq(schema.testimonials.id, id))
+      .returning();
+    if (!record) throw new NotFoundException(`Testimonial '${id}' not found`);
+    await this.triggerRevalidation('/', 'testimonials');
+    return record;
+  }
+
+  async deleteTestimonial(id: string) {
+    const [deleted] = await this.db
+      .delete(schema.testimonials)
+      .where(eq(schema.testimonials.id, id))
+      .returning();
+    if (!deleted) throw new NotFoundException(`Testimonial '${id}' not found`);
+    await this.triggerRevalidation('/', 'testimonials');
+    return { success: true, id };
   }
 }

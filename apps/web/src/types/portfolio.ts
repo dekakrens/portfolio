@@ -5,6 +5,12 @@ export interface SocialLinks {
   twitter?: string;
 }
 
+export interface ProfileHighlight {
+  icon?: string;
+  title: string;
+  subtitle: string;
+}
+
 export interface Profile {
   id?: string;
   fullName: string;
@@ -14,6 +20,7 @@ export interface Profile {
   availabilityBadge: string;
   resumeAssetUrl?: string;
   socialLinks: SocialLinks;
+  highlights?: ProfileHighlight[];
 }
 
 export interface Skill {

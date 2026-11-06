@@ -27,6 +27,16 @@ export const profiles = pgTable('profiles', {
     email?: string;
     twitter?: string;
   }>().default({}),
+  highlights: jsonb('highlights').$type<{
+    icon?: string;
+    title: string;
+    subtitle: string;
+  }[]>().default([
+    { icon: 'Layers', title: '6+ Years', subtitle: 'Full-Stack Experience' },
+    { icon: 'Cpu', title: 'Edge & IoT', subtitle: 'ESP32 / OpenCV / LoRa' },
+    { icon: 'Terminal', title: 'Enterprise', subtitle: 'NestJS & Drizzle ORM' },
+    { icon: 'Sparkles', title: '99.2%', subtitle: 'Vision OCR Accuracy' },
+  ]),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
